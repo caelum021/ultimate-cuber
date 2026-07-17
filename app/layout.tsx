@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   description:
     "A fast, WCA-style speedcube timer with solve tracking (ao5, ao12, PB) and a learning hub for OLL, PLL, and F2L. Get to sub-20 and beyond.",
   metadataBase: new URL("https://ultimatecuber.com"),
-  icons: { icon: "/logo.jpg", apple: "/logo.jpg" },
+  // Favicon/app icon comes from app/icon.jpg and app/apple-icon.jpg (Next file convention).
 };
 
 export default function RootLayout({
