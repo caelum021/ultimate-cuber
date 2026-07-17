@@ -4,8 +4,12 @@ import {
   cfopOverview,
   f2lGuide,
   fullPLLFavorites,
+  ortegaGuide,
+  ortegaOLL,
+  ortegaPBL,
   rouxCMLL,
   rouxGuide,
+  twoByTwoBeginner,
   twoLookOLL,
   twoLookPLL,
   wvlsAlgs,
@@ -63,6 +67,18 @@ export default function LearnPage() {
         <h2 className="text-2xl font-semibold tracking-tight">Alternative method: Roux</h2>
         <GuideBlock guide={rouxGuide} />
         <AlgSetCard set={rouxCMLL} />
+      </div>
+
+      <div className="flex flex-col gap-6">
+        <h2 className="text-2xl font-semibold tracking-tight">2×2 Cube</h2>
+        <p className="text-muted -mt-2">
+          New to cubing? The 2×2 is the friendliest place to start. Learn the beginner method first,
+          then speed up with Ortega.
+        </p>
+        <GuideBlock guide={twoByTwoBeginner} />
+        <GuideBlock guide={ortegaGuide} />
+        <AlgSetCard set={ortegaOLL} />
+        <AlgSetCard set={ortegaPBL} />
       </div>
 
       <p className="text-xs text-muted border-t border-border pt-6">

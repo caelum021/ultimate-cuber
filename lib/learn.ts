@@ -39,7 +39,6 @@ export const cfopOverview: Guide = {
     "OLL (Orient Last Layer): make the whole top face one color. The beginner-friendly '2-look OLL' below does this in two steps with only ~10 algorithms.",
     "PLL (Permute Last Layer): move the last-layer pieces into their correct spots. '2-look PLL' does this with just a handful of algorithms.",
   ],
-  learnMoreUrl: "https://www.speedsolving.com/wiki/index.php/CFOP_method",
 };
 
 export const f2lGuide: Guide = {
@@ -50,7 +49,6 @@ export const f2lGuide: Guide = {
     "Golden rule: if the corner is in the top layer, position it above its target slot, then set up the edge so the pair connects, and insert with a simple U R U' R' (or mirrored) style move.",
     "Look ahead — while finishing one pair, let your eyes track the next one. Slow down turning, speed up recognition. This is the single biggest habit change for breaking sub-20.",
   ],
-  learnMoreUrl: "https://speedcubedb.com/a/3x3/F2L",
 };
 
 export const twoLookOLL: AlgSet[] = [
@@ -152,7 +150,6 @@ export const rouxGuide: Guide = {
     "Step 3 — CMLL: orient AND permute the four top-layer corners in one step, ignoring the M-slice edges. 42 algorithms in full, but many overlap with corner cases you already know (Sune, Anti-Sune, etc.). See the starter set below.",
     "Step 4 — LSE (Last Six Edges): solve the remaining six edges using only M and U moves, in three sub-steps — (4a) orient edges, (4b) place the UL/UR edges, (4c) cycle the last M-slice edges. Almost no memorization; it's mostly intuition + a couple of short M/U sequences.",
   ],
-  learnMoreUrl: "https://www.speedsolving.com/wiki/index.php/Roux_method",
 };
 
 export const rouxCMLL: AlgSet = {
@@ -396,3 +393,67 @@ export const ollAllAlgs: Algorithm[] = [
   { name: "OLL 56", moves: "(r U r') (U R U' R') (U R U' R') (r U' r')" },
   { name: "OLL 57", moves: "(R U R' U') M' (U R U' r')" },
 ];
+
+// ---------------------------------------------------------------------------
+// 2×2 (Pocket Cube). Beginner (layer-by-layer) + Ortega. Algorithms sourced
+// from Speed Cube Database (speedcubedb.com).
+// ---------------------------------------------------------------------------
+
+export const twoByTwoBeginner: Guide = {
+  id: "2x2-beginner",
+  title: "2×2 — Beginner method (Layer by Layer)",
+  body: [
+    "The 2×2 (Pocket Cube) has no centers or edges — just 8 corners. That makes it the perfect first cube: it's basically the last layer of a 3×3, so everything you learn here carries straight over.",
+    "Step 1 — First layer: pick a color and solve all four corners of one face so the whole bottom layer is done, with the side stickers matching. It's intuitive — just place each corner where it belongs, like the corners step on a 3×3.",
+    "Step 2 — Orient the top: turn the cube so the unsolved layer is on top, then repeat the Sune algorithm (R U R' U R U2 R') until the entire top face is one solid color.",
+    "Step 3 — Permute the top: the top is one color but some corners may be in the wrong spot. Use a permutation algorithm (see Ortega PBL below) to swap them into place. Solved! 🎉",
+  ],
+};
+
+export const ortegaGuide: Guide = {
+  id: "ortega",
+  title: "2×2 — Ortega method",
+  body: [
+    "Ortega is the popular speed method for 2×2 — only about 12 algorithms, and it regularly gets sub-5-second solves. A great next step once the beginner method feels comfortable.",
+    "Step 1 — First face: solve one full face (all four corners the same color on top) WITHOUT worrying about the side stickers matching. Faster and more flexible than a full layer.",
+    "Step 2 — OLL: orient the last layer so the opposite face becomes one solid color. The 7 cases below cover it — many you already know from 3×3 (Sune, Anti-Sune…).",
+    "Step 3 — PBL: permute both layers at once — the corners on top AND bottom drop into place in a single algorithm. The 6 cases below finish the solve.",
+  ],
+  learnMoreUrl: "/learn/2x2",
+  learnMoreLabel: "Open the full 2×2 guide",
+};
+
+export const ortegaOLL: AlgSet = {
+  id: "ortega-oll",
+  title: "Ortega OLL — orient the top (7 cases)",
+  summary:
+    "Make the top face one solid color. Recognise the pattern of oriented/twisted corners and apply the matching algorithm.",
+  algs: [
+    { name: "Sune", moves: "R U R' U R U2 R'" },
+    { name: "Anti-Sune", moves: "R U2 R' U' R U' R'" },
+    { name: "Pi", moves: "F R U R' U' R U R' U' F'" },
+    { name: "P (T-shape)", moves: "F R U R' U' F'" },
+    { name: "L", moves: "y F' R U R' U' R' F R" },
+    { name: "T", moves: "R U R' U' R' F R F'" },
+    { name: "H", moves: "R2 U2 R' U2 R2" },
+  ],
+  learnMoreUrl: "/learn/2x2",
+  learnMoreLabel: "View all 2×2 algorithms",
+};
+
+export const ortegaPBL: AlgSet = {
+  id: "ortega-pbl",
+  title: "Ortega PBL — permute both layers (6 cases)",
+  summary:
+    "With the top oriented, these swap the corners on both layers into place at once — finishing the solve. Case names follow Speed Cube Database's Ortega PBL labels.",
+  algs: [
+    { name: "Opp / Opp", moves: "R2 F2 R2", note: "The shortest — learn this one first." },
+    { name: "Adj", moves: "y R U R' F' R U R' U' R' F R2 U' R'" },
+    { name: "Opp", moves: "R U' R' U' F2 U' R U R' U F2" },
+    { name: "Adj / Adj", moves: "R2 U' B2 U2 R2 U' R2" },
+    { name: "Adj / Opp", moves: "R U' R F2 R' U R'" },
+    { name: "Opp / Adj", moves: "y R2 U R2 U' R2 U R2 U' R2" },
+  ],
+  learnMoreUrl: "/learn/2x2",
+  learnMoreLabel: "View all 2×2 algorithms",
+};
