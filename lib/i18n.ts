@@ -2,7 +2,7 @@
 // reads the matching dictionary. Interface strings only — the Learn hub's
 // detailed algorithm guides stay in English for now.
 
-export type Language = "en" | "ko" | "zh" | "ja" | "es";
+export type Language = "en" | "ko" | "zh" | "ja" | "es" | "gib";
 
 export const LANGUAGES: { code: Language; label: string }[] = [
   { code: "en", label: "English" },
@@ -10,6 +10,7 @@ export const LANGUAGES: { code: Language; label: string }[] = [
   { code: "zh", label: "中文" },
   { code: "ja", label: "日本語" },
   { code: "es", label: "Español" },
+  { code: "gib", label: "Gibberish 🤪" },
 ];
 
 const en = {
@@ -255,6 +256,127 @@ const es: Dict = {
     setCMLL: "CMLL",
     set2x2OLL: "OLL 2×2",
     set2x2PBL: "PBL 2×2",
+  },
+};
+
+// Joke "language" — pure cubing brainrot gibberish. 🤪
+const gib: Dict = {
+  nav: { timer: "Tïmzø", learn: "Lernz", train: "Trainrot", settings: "Settyngz" },
+  home: {
+    eyebrow: "Ur rizzed pathz 2 sub-skibidi 🗿",
+    title: "Da ultimatez cübz yappenator",
+    subtitle:
+      "A fastz WCA-ish tïmzø dat yapz every solvz — ao5, ao12, n ur PB — plus a lernz cave 4 OLL, PLL, n F2L. no cap fr.",
+    ctaTimer: "Startz da tïmzø →",
+    ctaLearn: "Explorz da lernz cave",
+    feat1Title: "Freshz scramblez",
+    feat1Body:
+      "Nu randø 3×3 scramblz on every solvz, generatd instantz in ur browzr — no waitz, worksz offlinez. sheesh 🗿",
+    feat2Title: "Bigg branz statz",
+    feat2Body:
+      "Livez ao5 / ao12 / ao100, sessionz meanz, n bestz — wit +2 n DNF handlz on every solvz. 🧠",
+    feat3Title: "Lernz 2 be gudder",
+    feat3Body:
+      "Structurd guidez n algo setz 4 OLL, PLL, n F2L so u always knowz wat 2 grindz nextz.",
+    subTitle: "Subscribz 2 Ultimate Cuber on YouTubz",
+    subBody:
+      "Tutorialz, algo walkz, n tipz — from da babyz methodz all da wayz 2 sub-20. nu vidz 2 helpz u getz gudder.",
+    subBtn: "Subscribz on YouTubz",
+    feedbackBtn: "Yapback",
+    feedbackTitle: "Yapp at uz",
+    feedbackDesc: "Foundz a buggz or got a ideaz? we wannz hearz it fr fr.",
+    feedbackPlaceholder: "Yapp ur thoughtz herez…",
+    feedbackSend: "Yeetz",
+    feedbackCancel: "Nvm",
+  },
+  timer: {
+    scramble: "Scramblz · 3×3",
+    holdBefore: "Holdz",
+    holdAfter: "(or touchz n holdz), releasz 2 startz",
+    typingMode: "Typz modez",
+    inspectionOn: "15s inspectz",
+    clearSession: "Deletz sessionz",
+    clearConfirm: "Deletz all solvez in dis sessionz? no undoz bro 💀",
+    addSolve: "Addz solvz",
+    typingHintPre: "no dotz needz — e.g. typz",
+    typingHintPost: ". a dotz worksz 2.",
+    errorPre: "Typz a validz timez, e.g.",
+    noSolvesPre: "no solvez yetz. Holdz",
+    noSolvesPost: "2 getz readyz, releasz 2 startz.",
+  },
+  settings: {
+    title: "Settyngz",
+    subtitle: "Changez savez automaticz n applyz everywherz on dis devicez.",
+    timerSection: "Tïmzø",
+    appearanceSection: "Looksz",
+    timingMethod: "Timingz methodz",
+    timingMethodDesc:
+      "Tïmzø: holdz spacez / tapz 2 timez on screenz. Typz: usz ur own realz tïmzø n typz da resultz.",
+    timerLabel: "Tïmzø",
+    typingLabel: "Typz",
+    inspection: "15-secz inspectz",
+    inspectionDesc: "WCA-ish inspectz countdownz b4 every solvz, wit +2 / DNF penaltz.",
+    scrambleLength: "Scramblz lengthz",
+    scrambleLengthDesc: "Numbz of movez in every generatd 3×3 scramblz.",
+    hideWhileSolving: "Hidez timez while solvz",
+    hideWhileSolvingDesc: "Showz «solvz…» insteadz of da runningz timez, den revealz when u stopz.",
+    showMs: "Showz millisecz",
+    showMsDesc: "Showz 3 decimalz (12.345) insteadz of da normz 2 (12.34).",
+    theme: "Themez",
+    themeDesc: "Switchz between darkz n lightz on da wholez sitez.",
+    dark: "Darkz",
+    light: "Lightz",
+    language: "Languagz",
+    languageDesc: "Choozz da sitez languagz.",
+    reset: "Resetz all settyngz 2 defaultz",
+  },
+  learn: {
+    hubTitle: "Lernz cave",
+    hubIntro:
+      "Everythingz u needz 2 goz from babyz methodz 2 sub-20 CFOP solvz. Startz wit da overviewz, grindz F2L, den grabz 2-lookz OLL n PLL.",
+    secOLL: "2-Lookz OLL",
+    secPLL: "2-Lookz PLL",
+    secLevelUp: "Levelz upz",
+    secWVLS: "Advancd CFOP: WVLS",
+    secRoux: "Alternativz methodz: Roux",
+    sec2x2: "2×2 Cübz",
+    sec2x2Intro:
+      "Nu 2 cübz? Da 2×2 is da friendliestz startz. Lernz da babyz methodz firstz, den speedz upz wit Ortega.",
+    notation:
+      "Notationz: R U F = clockwisz face turnz, R' = anti-clockwisz, R2 = 180°. lowercasz (r, f) n M are widz/slicz movez. ez pz.",
+    learnMore: "Lernz morez",
+    viewAllOLL: "Seez all 57 OLL algoz",
+    viewAllPLL: "Seez all 21 PLL algoz",
+    viewAllWVLS: "Seez all 27 WV algoz",
+    viewAllCMLL: "Seez all 42 CMLL algoz",
+    viewAll2x2: "Seez all 2×2 algoz",
+    openFull2x2: "Openz da fullz 2×2 guidz",
+    watchHeading: "If u wannz lernz da babyz methodz, clickz da linkz belowz.",
+    watchBtn: "Watchz on YouTubz",
+    backToHub: "← Backz 2 lernz cave",
+  },
+  train: {
+    title: "Trainrot cave",
+    subtitle: "Pickz a setz, lookz at da casez, n namez it — den checkz urself.",
+    choose: "Practicz setz",
+    selectOne: "Selectz at leastz onez setz 2 practicz.",
+    recall: "Tryz 2 rememberz da algoz…",
+    reveal: "Revealz answerz",
+    next: "Nextz casez →",
+    typePlaceholder: "Typz da casez namez…",
+    check: "Checkz",
+    correct: "Correctz! ✓ sheesh 🗿",
+    wrong: "Nahz — tryz againz, or revealz.",
+    practiced: "Practicd",
+    hint: "Tipz: pressz Spacez or Enterz 2 revealz, den againz 4 nextz casez.",
+    setFullOLL: "Fullz OLL",
+    setFullPLL: "Fullz PLL",
+    set2LookOLL: "2-Lookz OLL",
+    set2LookPLL: "2-Lookz PLL",
+    setWVLS: "WVLS",
+    setCMLL: "CMLL",
+    set2x2OLL: "2×2 OLL",
+    set2x2PBL: "2×2 PBL",
   },
 };
 
@@ -612,4 +734,4 @@ const ja: Dict = {
   },
 };
 
-export const translations: Record<Language, Dict> = { en, ko, zh, ja, es };
+export const translations: Record<Language, Dict> = { en, ko, zh, ja, es, gib };

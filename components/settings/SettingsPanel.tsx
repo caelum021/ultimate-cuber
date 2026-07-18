@@ -90,13 +90,26 @@ export function SettingsPanel() {
             />
           </Row>
 
-          <Row title={t.settings.language} desc={t.settings.languageDesc}>
-            <Segmented
-              value={settings.language}
-              options={LANGUAGES.map((l) => ({ value: l.code, label: l.label }))}
-              onChange={(v) => update({ language: v })}
-            />
-          </Row>
+          {/* Language: full-width so all options (incl. Gibberish) wrap neatly */}
+          <div className="p-4">
+            <p className="font-medium">{t.settings.language}</p>
+            <p className="text-sm text-muted mt-0.5">{t.settings.languageDesc}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {LANGUAGES.map((l) => (
+                <button
+                  key={l.code}
+                  onClick={() => update({ language: l.code })}
+                  className={`px-3 py-1.5 rounded-full text-sm border transition ${
+                    settings.language === l.code
+                      ? "bg-accent text-accent-fg border-accent font-medium"
+                      : "border-border text-muted hover:text-foreground"
+                  }`}
+                >
+                  {l.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
