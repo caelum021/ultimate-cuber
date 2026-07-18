@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { SettingsProvider } from "@/components/SettingsProvider";
+import { BrainrotUnlockProvider } from "@/components/BrainrotUnlock";
 
 // Applies the saved theme before first paint to avoid a flash of the wrong theme.
 const themeScript = `try{var s=JSON.parse(localStorage.getItem('ultimatecuber.settings.v1'));document.documentElement.dataset.theme=(s&&s.theme)||'dark';}catch(e){document.documentElement.dataset.theme='dark';}`;
@@ -44,8 +45,10 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <SettingsProvider>
-          <Nav />
-          <main className="flex-1 flex flex-col">{children}</main>
+          <BrainrotUnlockProvider>
+            <Nav />
+            <main className="flex-1 flex flex-col">{children}</main>
+          </BrainrotUnlockProvider>
         </SettingsProvider>
       </body>
     </html>

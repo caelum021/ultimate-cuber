@@ -259,7 +259,7 @@ const es: Dict = {
   },
 };
 
-// Joke "language" — pure cubing brainrot gibberish. 🤪
+// Joke "language" — pure cubing brainrot. 🤪
 const gib: Dict = {
   nav: { timer: "Tïmzø", learn: "Lernz", train: "Trainrot", settings: "Settyngz" },
   home: {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useT } from "@/components/SettingsProvider";
 import { FeedbackButton } from "@/components/FeedbackButton";
 import { GibberishUnlock } from "@/components/GibberishUnlock";
+import { useBrainrotUnlock } from "@/components/BrainrotUnlock";
 
 export default function Home() {
   const t = useT();
@@ -12,7 +13,9 @@ export default function Home() {
       <FeedbackButton />
       <section className="mx-auto max-w-5xl px-4 py-20 sm:py-28 text-center">
         <p className="text-accent text-sm font-medium tracking-wide uppercase">{t.home.eyebrow}</p>
-        <h1 className="mt-3 text-4xl sm:text-6xl font-bold tracking-tight">{t.home.title}</h1>
+        <h1 className="mt-3 text-4xl sm:text-6xl font-bold tracking-tight">
+          <SecretTitle title={t.home.title} />
+        </h1>
         <p className="mt-5 mx-auto max-w-xl text-lg text-muted">{t.home.subtitle}</p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Link
@@ -53,6 +56,27 @@ export default function Home() {
         </div>
       </section>
     </div>
+  );
+}
+
+/**
+ * Renders the homepage title, but turns the word "ultimate" into the secret
+ * step-3 trigger for the Brainrot unlock quest. In languages where the title
+ * has no "ultimate", it just renders the plain title.
+ */
+function SecretTitle({ title }: { title: string }) {
+  const { tapUltimate } = useBrainrotUnlock();
+  const idx = title.toLowerCase().indexOf("ultimate");
+  if (idx === -1) return <>{title}</>;
+  const word = title.slice(idx, idx + "ultimate".length);
+  return (
+    <>
+      {title.slice(0, idx)}
+      <span onClick={tapUltimate} className="cursor-text select-none">
+        {word}
+      </span>
+      {title.slice(idx + "ultimate".length)}
+    </>
   );
 }
 

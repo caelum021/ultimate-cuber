@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useT } from "@/components/SettingsProvider";
+import { useBrainrotUnlock } from "@/components/BrainrotUnlock";
 import { CaseDiagram } from "@/components/learn/CaseDiagram";
 import {
   cmllGroups,
@@ -27,6 +28,7 @@ function normalizeName(s: string): string {
 
 export function Trainer() {
   const t = useT();
+  const { tapPracticed } = useBrainrotUnlock();
 
   const sets: TrainSet[] = useMemo(
     () => [
@@ -220,7 +222,10 @@ export function Trainer() {
 
       <div className="flex items-center justify-between text-sm text-muted">
         <span>
-          {t.train.practiced}: <span className="font-mono text-foreground">{count}</span>
+          {t.train.practiced}:{" "}
+          <span onClick={tapPracticed} className="font-mono text-foreground cursor-text select-none">
+            {count}
+          </span>
         </span>
       </div>
     </div>
