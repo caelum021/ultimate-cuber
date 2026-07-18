@@ -263,24 +263,24 @@ const es: Dict = {
 const gib: Dict = {
   nav: { timer: "Tïmzø", learn: "Lernz", train: "Trainrot", settings: "Settyngz" },
   home: {
-    eyebrow: "Ur rizzed pathz 2 sub-skibidi 🗿",
-    title: "Da ultimatez cübz yappenator",
+    eyebrow: "Ur sigma rizzed pathz 2 sub-skibidi 🗿",
+    title: "Da ultimatez cübz yappenator 🚽",
     subtitle:
-      "A fastz WCA-ish tïmzø dat yapz every solvz — ao5, ao12, n ur PB — plus a lernz cave 4 OLL, PLL, n F2L. no cap fr.",
+      "A fastz WCA-ish tïmzø dat yapz every solvz — ao5, ao12, n ur PB — plus a lernz cave 4 OLL, PLL, n F2L. no cap fr fr on god 🗿",
     ctaTimer: "Startz da tïmzø →",
-    ctaLearn: "Explorz da lernz cave",
+    ctaLearn: "Explorz da lernz cave 🦇",
     feat1Title: "Freshz scramblez",
     feat1Body:
-      "Nu randø 3×3 scramblz on every solvz, generatd instantz in ur browzr — no waitz, worksz offlinez. sheesh 🗿",
+      "Nu randø 3×3 scramblz on every solvz, generatd instantz in ur browzr — no waitz, worksz offlinez. +100 auraz sheesh 🗿",
     feat2Title: "Bigg branz statz",
     feat2Body:
-      "Livez ao5 / ao12 / ao100, sessionz meanz, n bestz — wit +2 n DNF handlz on every solvz. 🧠",
-    feat3Title: "Lernz 2 be gudder",
+      "Livez ao5 / ao12 / ao100, sessionz meanz, n bestz — wit +2 n DNF handlz on every solvz. maxxd out branz 🧠",
+    feat3Title: "Lernz 2 be gudder (stop bein delulu)",
     feat3Body:
-      "Structurd guidez n algo setz 4 OLL, PLL, n F2L so u always knowz wat 2 grindz nextz.",
-    subTitle: "Subscribz 2 Ultimate Cuber on YouTubz",
+      "Structurd guidez n algo setz 4 OLL, PLL, n F2L so u always knowz wat 2 grindz nextz. lockz in n startz cookin 🔥",
+    subTitle: "Subscribz 2 Ultimate Cuber on YouTubz (or L + ratio) 💀",
     subBody:
-      "Tutorialz, algo walkz, n tipz — from da babyz methodz all da wayz 2 sub-20. nu vidz 2 helpz u getz gudder.",
+      "Tutorialz, algo walkz, n tipz — from da babyz methodz all da wayz 2 sub-20. nu vidz 2 helpz u getz gudder. mad auraz 🗿",
     subBtn: "Subscribz on YouTubz",
     feedbackBtn: "Yapback",
     feedbackTitle: "Yapp at uz",
@@ -331,9 +331,9 @@ const gib: Dict = {
     reset: "Resetz all settyngz 2 defaultz",
   },
   learn: {
-    hubTitle: "Lernz cave",
+    hubTitle: "Lernz cave 🦇",
     hubIntro:
-      "Everythingz u needz 2 goz from babyz methodz 2 sub-20 CFOP solvz. Startz wit da overviewz, grindz F2L, den grabz 2-lookz OLL n PLL.",
+      "Everythingz u needz 2 goz from babyz methodz 2 sub-20 CFOP solvz. Startz wit da overviewz, grindz F2L, den grabz 2-lookz OLL n PLL. lockz in n cookz 🔥🗿",
     secOLL: "2-Lookz OLL",
     secPLL: "2-Lookz PLL",
     secLevelUp: "Levelz upz",
@@ -356,8 +356,8 @@ const gib: Dict = {
     backToHub: "← Backz 2 lernz cave",
   },
   train: {
-    title: "Trainrot cave",
-    subtitle: "Pickz a setz, lookz at da casez, n namez it — den checkz urself.",
+    title: "Trainrot cave 🚽",
+    subtitle: "Pickz a setz, lookz at da casez, n namez it — den checkz urself. lockz in bro 🔒",
     choose: "Practicz setz",
     selectOne: "Selectz at leastz onez setz 2 practicz.",
     recall: "Tryz 2 rememberz da algoz…",
@@ -365,8 +365,8 @@ const gib: Dict = {
     next: "Nextz casez →",
     typePlaceholder: "Typz da casez namez…",
     check: "Checkz",
-    correct: "Correctz! ✓ sheesh 🗿",
-    wrong: "Nahz — tryz againz, or revealz.",
+    correct: "Correctz! ✓ +100 auraz sheesh 🗿",
+    wrong: "Nahz — negativez auraz 💀 tryz againz, or revealz.",
     practiced: "Practicd",
     hint: "Tipz: pressz Spacez or Enterz 2 revealz, den againz 4 nextz casez.",
     setFullOLL: "Fullz OLL",
