@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useT } from "@/components/SettingsProvider";
 
-const FEEDBACK_EMAIL = "caelum0to1@gmail.com";
+const FEEDBACK_EMAIL = "ultimatecuber7@gmail.com";
 
 export function FeedbackButton() {
   const t = useT();
