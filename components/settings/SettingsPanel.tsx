@@ -8,6 +8,11 @@ export function SettingsPanel() {
   const { settings, update, reset } = useSettings();
   const t = useT();
 
+  // Gibberish is a hidden easter egg — only show it once unlocked (or already in use).
+  const visibleLanguages = LANGUAGES.filter(
+    (l) => l.code !== "gib" || settings.gibberishUnlocked || settings.language === "gib",
+  );
+
   return (
     <div className="mx-auto max-w-2xl w-full px-4 py-10 flex flex-col gap-8">
       <header>
@@ -95,7 +100,7 @@ export function SettingsPanel() {
             <p className="font-medium">{t.settings.language}</p>
             <p className="text-sm text-muted mt-0.5">{t.settings.languageDesc}</p>
             <div className="mt-3 flex flex-wrap gap-2">
-              {LANGUAGES.map((l) => (
+              {visibleLanguages.map((l) => (
                 <button
                   key={l.code}
                   onClick={() => update({ language: l.code })}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useT } from "@/components/SettingsProvider";
 import { FeedbackButton } from "@/components/FeedbackButton";
+import { GibberishUnlock } from "@/components/GibberishUnlock";
 
 export default function Home() {
   const t = useT();
@@ -37,7 +38,7 @@ export default function Home() {
 
       <section className="mx-auto max-w-5xl px-4 pb-24">
         <div className="rounded-2xl border border-border bg-card p-8 sm:p-10 flex flex-col items-center text-center gap-4">
-          <span className="text-3xl" aria-hidden>▶</span>
+          <GibberishUnlock />
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">{t.home.subTitle}</h2>
           <p className="max-w-md text-muted">{t.home.subBody}</p>
           <a

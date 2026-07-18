@@ -22,6 +22,8 @@ export type Settings = {
   theme: Theme;
   /** UI language. */
   language: Language;
+  /** Easter egg: the hidden "Gibberish" language is revealed once found. */
+  gibberishUnlocked: boolean;
 };
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -32,6 +34,7 @@ export const DEFAULT_SETTINGS: Settings = {
   showMilliseconds: false,
   theme: "dark",
   language: "en",
+  gibberishUnlocked: false,
 };
 
 export const SETTINGS_KEY = "ultimatecuber.settings.v1";
