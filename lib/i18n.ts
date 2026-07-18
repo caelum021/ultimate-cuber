@@ -12,7 +12,7 @@ export const LANGUAGES: { code: Language; label: string }[] = [
 ];
 
 const en = {
-  nav: { timer: "Timer", learn: "Learn", settings: "Settings" },
+  nav: { timer: "Timer", learn: "Learn", train: "Train", settings: "Settings" },
   home: {
     eyebrow: "Your road to sub-20 and beyond",
     title: "The ultimate speedcubing companion",
@@ -33,6 +33,12 @@ const en = {
     subBody:
       "Tutorials, algorithm walkthroughs, and tips — from the beginner's method all the way to sub-20. New videos to help you improve.",
     subBtn: "Subscribe on YouTube",
+    feedbackBtn: "Feedback",
+    feedbackTitle: "Send us feedback",
+    feedbackDesc: "Found a bug or have an idea? We'd love to hear it.",
+    feedbackPlaceholder: "Type your feedback here…",
+    feedbackSend: "Send",
+    feedbackCancel: "Cancel",
   },
   timer: {
     scramble: "Scramble · 3×3",
@@ -101,13 +107,32 @@ const en = {
     watchBtn: "Watch on YouTube",
     backToHub: "← Back to learning hub",
   },
+  train: {
+    title: "Training hub",
+    subtitle: "Pick a set, study the case, recall the algorithm, then reveal to check yourself.",
+    choose: "Practice sets",
+    selectOne: "Select at least one set to practice.",
+    recall: "Try to recall the algorithm…",
+    reveal: "Reveal answer",
+    next: "Next case →",
+    practiced: "Practiced",
+    hint: "Tip: press Space or Enter to reveal, then again for the next case.",
+    setFullOLL: "Full OLL",
+    setFullPLL: "Full PLL",
+    set2LookOLL: "2-Look OLL",
+    set2LookPLL: "2-Look PLL",
+    setWVLS: "WVLS",
+    setCMLL: "CMLL",
+    set2x2OLL: "2×2 OLL",
+    set2x2PBL: "2×2 PBL",
+  },
 };
 
 /** All languages share this shape (enforced by the Record type below). */
 export type Dict = typeof en;
 
 const ko: Dict = {
-  nav: { timer: "타이머", learn: "배우기", settings: "설정" },
+  nav: { timer: "타이머", learn: "배우기", train: "연습", settings: "설정" },
   home: {
     eyebrow: "Sub 20을 향한 여정",
     title: "궁극의 스피드큐빙 파트너",
@@ -128,6 +153,12 @@ const ko: Dict = {
     subBody:
       "초보자 방법부터 Sub 20까지 — 튜토리얼, 알고리즘 설명, 팁. 실력 향상을 돕는 새 영상들.",
     subBtn: "유튜브에서 구독",
+    feedbackBtn: "피드백",
+    feedbackTitle: "피드백 보내기",
+    feedbackDesc: "버그를 발견했거나 아이디어가 있나요? 알려주세요!",
+    feedbackPlaceholder: "여기에 피드백을 입력하세요…",
+    feedbackSend: "보내기",
+    feedbackCancel: "취소",
   },
   timer: {
     scramble: "스크램블 · 3×3",
@@ -195,10 +226,29 @@ const ko: Dict = {
     watchBtn: "유튜브에서 보기",
     backToHub: "← 학습 허브로 돌아가기",
   },
+  train: {
+    title: "연습 허브",
+    subtitle: "세트를 고르고, 케이스를 보고, 알고리즘을 떠올린 뒤 정답을 확인하세요.",
+    choose: "연습할 세트",
+    selectOne: "연습할 세트를 하나 이상 선택하세요.",
+    recall: "알고리즘을 떠올려 보세요…",
+    reveal: "정답 보기",
+    next: "다음 케이스 →",
+    practiced: "연습한 횟수",
+    hint: "팁: 스페이스 또는 엔터로 정답을 보고, 다시 누르면 다음 케이스예요.",
+    setFullOLL: "전체 OLL",
+    setFullPLL: "전체 PLL",
+    set2LookOLL: "2-룩 OLL",
+    set2LookPLL: "2-룩 PLL",
+    setWVLS: "WVLS",
+    setCMLL: "CMLL",
+    set2x2OLL: "2×2 OLL",
+    set2x2PBL: "2×2 PBL",
+  },
 };
 
 const zh: Dict = {
-  nav: { timer: "计时器", learn: "学习", settings: "设置" },
+  nav: { timer: "计时器", learn: "学习", train: "练习", settings: "设置" },
   home: {
     eyebrow: "迈向 sub-20 之路",
     title: "终极速拧伴侣",
@@ -215,6 +265,12 @@ const zh: Dict = {
     subTitle: "在 YouTube 上订阅 Ultimate Cuber",
     subBody: "从入门方法到 sub-20 —— 教程、公式讲解和技巧。帮助你进步的新视频。",
     subBtn: "在 YouTube 订阅",
+    feedbackBtn: "反馈",
+    feedbackTitle: "给我们反馈",
+    feedbackDesc: "发现问题或有想法？我们很想听听。",
+    feedbackPlaceholder: "在这里输入你的反馈……",
+    feedbackSend: "发送",
+    feedbackCancel: "取消",
   },
   timer: {
     scramble: "打乱 · 3×3",
@@ -280,10 +336,29 @@ const zh: Dict = {
     watchBtn: "在 YouTube 观看",
     backToHub: "← 返回学习中心",
   },
+  train: {
+    title: "练习中心",
+    subtitle: "选择一个公式集，观察情况，回忆公式，然后揭晓答案检查自己。",
+    choose: "练习公式集",
+    selectOne: "请至少选择一个要练习的公式集。",
+    recall: "试着回忆这个公式……",
+    reveal: "显示答案",
+    next: "下一个 →",
+    practiced: "已练习",
+    hint: "提示：按空格或回车显示答案，再按一次进入下一个。",
+    setFullOLL: "完整 OLL",
+    setFullPLL: "完整 PLL",
+    set2LookOLL: "两步 OLL",
+    set2LookPLL: "两步 PLL",
+    setWVLS: "WVLS",
+    setCMLL: "CMLL",
+    set2x2OLL: "2×2 OLL",
+    set2x2PBL: "2×2 PBL",
+  },
 };
 
 const ja: Dict = {
-  nav: { timer: "タイマー", learn: "学ぶ", settings: "設定" },
+  nav: { timer: "タイマー", learn: "学ぶ", train: "練習", settings: "設定" },
   home: {
     eyebrow: "サブ20への道",
     title: "究極のスピードキュービング相棒",
@@ -304,6 +379,12 @@ const ja: Dict = {
     subBody:
       "初心者向けの解法からサブ20まで — チュートリアル、手順解説、コツ。上達を助ける新着動画。",
     subBtn: "YouTube で登録",
+    feedbackBtn: "フィードバック",
+    feedbackTitle: "フィードバックを送る",
+    feedbackDesc: "バグや改善案があれば、ぜひ教えてください。",
+    feedbackPlaceholder: "ここにフィードバックを入力…",
+    feedbackSend: "送信",
+    feedbackCancel: "キャンセル",
   },
   timer: {
     scramble: "スクランブル · 3×3",
@@ -370,6 +451,25 @@ const ja: Dict = {
     watchHeading: "初心者向け解法を学びたい方は、下のリンクをクリック。",
     watchBtn: "YouTubeで見る",
     backToHub: "← 学習ハブに戻る",
+  },
+  train: {
+    title: "練習ハブ",
+    subtitle: "セットを選び、ケースを見て、手順を思い出してから答えを表示して確認しましょう。",
+    choose: "練習するセット",
+    selectOne: "練習するセットを1つ以上選んでください。",
+    recall: "手順を思い出してみましょう…",
+    reveal: "答えを表示",
+    next: "次のケース →",
+    practiced: "練習回数",
+    hint: "ヒント：スペースまたはEnterで答えを表示、もう一度で次のケースへ。",
+    setFullOLL: "全 OLL",
+    setFullPLL: "全 PLL",
+    set2LookOLL: "2ルック OLL",
+    set2LookPLL: "2ルック PLL",
+    setWVLS: "WVLS",
+    setCMLL: "CMLL",
+    set2x2OLL: "2×2 OLL",
+    set2x2PBL: "2×2 PBL",
   },
 };
 

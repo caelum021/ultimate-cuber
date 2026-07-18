@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useT } from "@/components/SettingsProvider";
+import { FeedbackButton } from "@/components/FeedbackButton";
 
 export default function Home() {
   const t = useT();
   return (
     <div className="flex-1">
+      <FeedbackButton />
       <section className="mx-auto max-w-5xl px-4 py-20 sm:py-28 text-center">
         <p className="text-accent text-sm font-medium tracking-wide uppercase">{t.home.eyebrow}</p>
         <h1 className="mt-3 text-4xl sm:text-6xl font-bold tracking-tight">{t.home.title}</h1>

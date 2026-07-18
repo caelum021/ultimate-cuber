@@ -25,6 +25,7 @@ export function Nav() {
         <div className="flex items-center gap-1 text-sm">
           <NavLink href="/timer">{t.nav.timer}</NavLink>
           <NavLink href="/learn">{t.nav.learn}</NavLink>
+          <NavLink href="/train">{t.nav.train}</NavLink>
           <NavLink href="/settings">{t.nav.settings}</NavLink>
         </div>
       </nav>
