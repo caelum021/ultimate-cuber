@@ -52,14 +52,14 @@ export default function TwoByTwoPage() {
       <section className="flex flex-col gap-3">
         <h2 className="text-2xl font-semibold tracking-tight">{ortegaOLL.title}</h2>
         <p className="text-sm text-muted">{ortegaOLL.summary}</p>
-        <AlgList algs={ortegaOLL.algs} />
+        <AlgList algs={ortegaOLL.algs} pzl={2} />
       </section>
 
       {/* Ortega PBL */}
       <section className="flex flex-col gap-3">
         <h2 className="text-2xl font-semibold tracking-tight">{ortegaPBL.title}</h2>
         <p className="text-sm text-muted">{ortegaPBL.summary}</p>
-        <AlgList algs={ortegaPBL.algs} />
+        <AlgList algs={ortegaPBL.algs} pzl={2} bothFaces />
       </section>
 
       <p className="text-xs text-muted border-t border-border pt-6">

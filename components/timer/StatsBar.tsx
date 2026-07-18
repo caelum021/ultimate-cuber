@@ -2,9 +2,14 @@
 
 import type { Solve } from "@/lib/solves";
 import { averageOfN, bestMs, formatMs, sessionMean } from "@/lib/stats";
+import { useSettings } from "@/components/SettingsProvider";
 
 /** Solves must be passed newest-first (index 0 = most recent). */
 export function StatsBar({ solves }: { solves: Solve[] }) {
+  const { settings } = useSettings();
+  const decimals = settings.showMilliseconds ? 3 : 2;
+  const fmt = (ms: number | null) => (ms === null ? "—" : formatMs(ms, decimals));
+
   const stats: { label: string; value: string }[] = [
     { label: "solves", value: String(solves.length) },
     { label: "best", value: fmt(bestMs(solves)) },
@@ -24,9 +29,4 @@ export function StatsBar({ solves }: { solves: Solve[] }) {
       ))}
     </div>
   );
-}
-
-function fmt(ms: number | null): string {
-  if (ms === null) return "—";
-  return formatMs(ms);
 }

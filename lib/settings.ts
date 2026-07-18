@@ -1,5 +1,7 @@
 // Site-wide settings, persisted to localStorage and shared via SettingsProvider.
 
+import type { Language } from "./i18n";
+
 export type Theme = "dark" | "light";
 
 /** How solve times are recorded: the spacebar/tap timer, or manual typing. */
@@ -14,16 +16,22 @@ export type Settings = {
   scrambleLength: number;
   /** Hide the running time during a solve (revealed on stop). */
   hideWhileSolving: boolean;
+  /** Show 3 decimals (milliseconds, e.g. 12.345) instead of 2 (12.34). */
+  showMilliseconds: boolean;
   /** Colour theme. */
   theme: Theme;
+  /** UI language. */
+  language: Language;
 };
 
 export const DEFAULT_SETTINGS: Settings = {
   timingMethod: "timer",
-  inspection: false,
+  inspection: true,
   scrambleLength: 20,
   hideWhileSolving: false,
+  showMilliseconds: false,
   theme: "dark",
+  language: "en",
 };
 
 export const SETTINGS_KEY = "ultimatecuber.settings.v1";

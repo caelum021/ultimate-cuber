@@ -2,6 +2,7 @@
 
 import { effectiveMs, type Penalty, type Solve } from "@/lib/solves";
 import { formatMs } from "@/lib/stats";
+import { useSettings, useT } from "@/components/SettingsProvider";
 
 type Props = {
   solves: Solve[]; // newest-first
@@ -10,11 +11,15 @@ type Props = {
 };
 
 export function SolveList({ solves, onSetPenalty, onDelete }: Props) {
+  const { settings } = useSettings();
+  const t = useT();
+  const decimals = settings.showMilliseconds ? 3 : 2;
   if (solves.length === 0) {
     return (
       <p className="text-sm text-muted text-center py-8">
-        No solves yet. Hold <kbd className="px-1.5 py-0.5 rounded bg-card border border-border">space</kbd> to
-        get ready, release to start.
+        {t.timer.noSolvesPre}{" "}
+        <kbd className="px-1.5 py-0.5 rounded bg-card border border-border">space</kbd>{" "}
+        {t.timer.noSolvesPost}
       </p>
     );
   }
@@ -27,7 +32,7 @@ export function SolveList({ solves, onSetPenalty, onDelete }: Props) {
           <li key={solve.id} className="flex items-center gap-3 py-2">
             <span className="w-8 text-xs text-muted tabular-nums">{number}.</span>
             <span className="w-20 font-mono font-semibold tabular-nums">
-              {formatMs(effectiveMs(solve))}
+              {formatMs(effectiveMs(solve), decimals)}
               {solve.penalty === "+2" && <span className="text-amber-400 text-xs align-super"> +2</span>}
             </span>
             <div className="flex gap-1 text-xs">

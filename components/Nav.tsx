@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useT } from "@/components/SettingsProvider";
 
 export function Nav() {
+  const t = useT();
   return (
     <header className="border-b border-border bg-card/60 backdrop-blur sticky top-0 z-20">
       <nav className="mx-auto max-w-5xl px-4 h-14 flex items-center justify-between">
@@ -19,9 +23,9 @@ export function Nav() {
           </span>
         </Link>
         <div className="flex items-center gap-1 text-sm">
-          <NavLink href="/timer">Timer</NavLink>
-          <NavLink href="/learn">Learn</NavLink>
-          <NavLink href="/settings">Settings</NavLink>
+          <NavLink href="/timer">{t.nav.timer}</NavLink>
+          <NavLink href="/learn">{t.nav.learn}</NavLink>
+          <NavLink href="/settings">{t.nav.settings}</NavLink>
         </div>
       </nav>
     </header>

@@ -7,6 +7,7 @@ import {
   saveSettings,
   type Settings,
 } from "@/lib/settings";
+import { translations, type Dict } from "@/lib/i18n";
 
 type SettingsContextValue = {
   settings: Settings;
@@ -28,11 +29,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setLoaded(true);
   }, []);
 
-  // Persist + apply theme whenever settings change (after hydration).
+  // Persist + apply theme/language whenever settings change (after hydration).
   useEffect(() => {
     if (!loaded) return;
     saveSettings(settings);
     document.documentElement.dataset.theme = settings.theme;
+    document.documentElement.lang = settings.language;
   }, [settings, loaded]);
 
   const update = useCallback((patch: Partial<Settings>) => {
@@ -52,4 +54,10 @@ export function useSettings(): SettingsContextValue {
   const ctx = useContext(SettingsContext);
   if (!ctx) throw new Error("useSettings must be used within <SettingsProvider>");
   return ctx;
+}
+
+/** Returns the translation dictionary for the current language. */
+export function useT(): Dict {
+  const { settings } = useSettings();
+  return translations[settings.language];
 }

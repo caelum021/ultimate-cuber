@@ -1,53 +1,46 @@
 "use client";
 
-import { useSettings } from "@/components/SettingsProvider";
+import { useSettings, useT } from "@/components/SettingsProvider";
 import { SCRAMBLE_MAX, SCRAMBLE_MIN } from "@/lib/settings";
+import { LANGUAGES } from "@/lib/i18n";
 
 export function SettingsPanel() {
   const { settings, update, reset } = useSettings();
+  const t = useT();
 
   return (
     <div className="mx-auto max-w-2xl w-full px-4 py-10 flex flex-col gap-8">
       <header>
-        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-        <p className="mt-2 text-muted">
-          Changes save automatically and apply everywhere on this device.
-        </p>
+        <h1 className="text-3xl font-bold tracking-tight">{t.settings.title}</h1>
+        <p className="mt-2 text-muted">{t.settings.subtitle}</p>
       </header>
 
       {/* Timer */}
       <section className="flex flex-col gap-1">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-2">Timer</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-2">
+          {t.settings.timerSection}
+        </h2>
         <div className="rounded-xl border border-border bg-card divide-y divide-border">
-          <Row
-            title="Timing method"
-            desc="Timer: hold space / tap to time on-screen. Typing: use your own physical timer and type the result."
-          >
+          <Row title={t.settings.timingMethod} desc={t.settings.timingMethodDesc}>
             <Segmented
               value={settings.timingMethod}
               options={[
-                { value: "timer", label: "Timer" },
-                { value: "typing", label: "Typing" },
+                { value: "timer", label: t.settings.timerLabel },
+                { value: "typing", label: t.settings.typingLabel },
               ]}
               onChange={(v) => update({ timingMethod: v })}
             />
           </Row>
 
-          <Row
-            title="15-second inspection"
-            desc="WCA-style inspection countdown before each solve, with +2 / DNF penalties."
-          >
+          <Row title={t.settings.inspection} desc={t.settings.inspectionDesc}>
             <Toggle
               checked={settings.inspection}
               onChange={(v) => update({ inspection: v })}
-              label="Inspection"
+              label={t.settings.inspection}
             />
           </Row>
 
-          <Row
-            title="Scramble length"
-            desc="Number of moves in each generated 3×3 scramble."
-          >
+          <Row title={t.settings.scrambleLength} desc={t.settings.scrambleLengthDesc}>
             <div className="flex items-center gap-3">
               <input
                 type="range"
@@ -56,20 +49,25 @@ export function SettingsPanel() {
                 value={settings.scrambleLength}
                 onChange={(e) => update({ scrambleLength: Number(e.target.value) })}
                 className="accent-accent w-36"
-                aria-label="Scramble length"
+                aria-label={t.settings.scrambleLength}
               />
               <span className="font-mono tabular-nums w-8 text-right">{settings.scrambleLength}</span>
             </div>
           </Row>
 
-          <Row
-            title="Hide time while solving"
-            desc="Shows “solving…” instead of the running time, then reveals it when you stop."
-          >
+          <Row title={t.settings.hideWhileSolving} desc={t.settings.hideWhileSolvingDesc}>
             <Toggle
               checked={settings.hideWhileSolving}
               onChange={(v) => update({ hideWhileSolving: v })}
-              label="Hide time while solving"
+              label={t.settings.hideWhileSolving}
+            />
+          </Row>
+
+          <Row title={t.settings.showMs} desc={t.settings.showMsDesc}>
+            <Toggle
+              checked={settings.showMilliseconds}
+              onChange={(v) => update({ showMilliseconds: v })}
+              label={t.settings.showMs}
             />
           </Row>
         </div>
@@ -77,27 +75,34 @@ export function SettingsPanel() {
 
       {/* Appearance */}
       <section className="flex flex-col gap-1">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-2">Appearance</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-2">
+          {t.settings.appearanceSection}
+        </h2>
         <div className="rounded-xl border border-border bg-card divide-y divide-border">
-          <Row title="Theme" desc="Switch between dark and light across the whole site.">
+          <Row title={t.settings.theme} desc={t.settings.themeDesc}>
             <Segmented
               value={settings.theme}
               options={[
-                { value: "dark", label: "Dark" },
-                { value: "light", label: "Light" },
+                { value: "dark", label: t.settings.dark },
+                { value: "light", label: t.settings.light },
               ]}
               onChange={(v) => update({ theme: v })}
+            />
+          </Row>
+
+          <Row title={t.settings.language} desc={t.settings.languageDesc}>
+            <Segmented
+              value={settings.language}
+              options={LANGUAGES.map((l) => ({ value: l.code, label: l.label }))}
+              onChange={(v) => update({ language: v })}
             />
           </Row>
         </div>
       </section>
 
       <div>
-        <button
-          onClick={reset}
-          className="text-sm text-muted hover:text-red-400 transition"
-        >
-          Reset all settings to defaults
+        <button onClick={reset} className="text-sm text-muted hover:text-red-400 transition">
+          {t.settings.reset}
         </button>
       </div>
     </div>

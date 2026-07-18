@@ -10,14 +10,16 @@ import {
   type Solve,
 } from "@/lib/solves";
 import { generateScramble as makeScramble } from "@/lib/scramble";
-import { parseTimeInput } from "@/lib/stats";
-import { useSettings } from "@/components/SettingsProvider";
+import { formatMs, parseTypedTime } from "@/lib/stats";
+import { useSettings, useT } from "@/components/SettingsProvider";
+import type { Dict } from "@/lib/i18n";
 import { useSpeedTimer, type TimerPhase } from "./useSpeedTimer";
 import { StatsBar } from "./StatsBar";
 import { SolveList } from "./SolveList";
 
 export function Timer() {
   const { settings } = useSettings();
+  const t = useT();
   const [solves, setSolves] = useState<Solve[]>([]);
   const [scramble, setScramble] = useState<string>("");
   const [hydrated, setHydrated] = useState(false);
@@ -75,16 +77,16 @@ export function Timer() {
   }, []);
 
   const clearSession = useCallback(() => {
-    if (window.confirm("Clear all solves in this session? This can't be undone.")) {
+    if (window.confirm(t.timer.clearConfirm)) {
       setSolves([]);
     }
-  }, []);
+  }, [t]);
 
   return (
     <div className="mx-auto max-w-3xl w-full px-4 py-6 flex flex-col gap-6">
       {/* Scramble */}
       <div className="text-center">
-        <p className="text-xs uppercase tracking-wide text-muted mb-1">Scramble · 3×3</p>
+        <p className="text-xs uppercase tracking-wide text-muted mb-1">{t.timer.scramble}</p>
         <p className="font-mono text-lg sm:text-xl leading-relaxed break-words min-h-7">
           {scramble || "…"}
         </p>
@@ -92,7 +94,11 @@ export function Timer() {
 
       {/* Timing area: spacebar/tap pad or manual typing */}
       {typingMode ? (
-        <TypingPad onSubmit={(ms) => handleSolveComplete(ms, "OK")} />
+        <TypingPad
+          onSubmit={(ms) => handleSolveComplete(ms, "OK")}
+          showMilliseconds={settings.showMilliseconds}
+          t={t}
+        />
       ) : (
         <button
           type="button"
@@ -112,10 +118,12 @@ export function Timer() {
             displayMs={displayMs}
             inspectionRemaining={inspectionRemaining}
             hideWhileSolving={settings.hideWhileSolving}
+            decimals={settings.showMilliseconds ? 3 : 2}
           />
           <p className="mt-4 text-xs text-muted">
-            Hold <kbd className="px-1.5 py-0.5 rounded bg-background border border-border">space</kbd> (or
-            touch &amp; hold), release to start
+            {t.timer.holdBefore}{" "}
+            <kbd className="px-1.5 py-0.5 rounded bg-background border border-border">space</kbd>{" "}
+            {t.timer.holdAfter}
           </p>
         </button>
       )}
@@ -123,15 +131,15 @@ export function Timer() {
       {/* Controls */}
       <div className="flex items-center justify-between text-sm">
         <div className="flex items-center gap-3 text-muted">
-          {typingMode && <span>Typing mode</span>}
-          {!typingMode && settings.inspection && <span>15s inspection</span>}
+          {typingMode && <span>{t.timer.typingMode}</span>}
+          {!typingMode && settings.inspection && <span>{t.timer.inspectionOn}</span>}
           <Link href="/settings" className="hover:text-foreground transition">
-            ⚙ Settings
+            ⚙ {t.nav.settings}
           </Link>
         </div>
         {solves.length > 0 && (
           <button onClick={clearSession} className="text-muted hover:text-red-400 transition">
-            Clear session
+            {t.timer.clearSession}
           </button>
         )}
       </div>
@@ -147,12 +155,23 @@ export function Timer() {
 
 // Manual time entry — for when you time on a physical/IRL timer and just type
 // the result you got. Enter or "Add" records the solve.
-function TypingPad({ onSubmit }: { onSubmit: (ms: number) => void }) {
+function TypingPad({
+  onSubmit,
+  showMilliseconds,
+  t,
+}: {
+  onSubmit: (ms: number) => void;
+  showMilliseconds: boolean;
+  t: Dict;
+}) {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
 
+  const decimals = showMilliseconds ? 3 : 2;
+  const preview = parseTypedTime(value, showMilliseconds);
+
   const submit = () => {
-    const ms = parseTimeInput(value);
+    const ms = parseTypedTime(value, showMilliseconds);
     if (ms === null) {
       setError(true);
       return;
@@ -162,8 +181,10 @@ function TypingPad({ onSubmit }: { onSubmit: (ms: number) => void }) {
     setError(false);
   };
 
+  const digitExample = showMilliseconds ? "12345" : "1234";
+
   return (
-    <div className="rounded-2xl border border-border bg-card/40 py-14 sm:py-20 px-4 flex flex-col items-center justify-center gap-4">
+    <div className="rounded-2xl border border-border bg-card/40 py-14 sm:py-20 px-4 flex flex-col items-center justify-center gap-3">
       <input
         type="text"
         inputMode="decimal"
@@ -176,27 +197,34 @@ function TypingPad({ onSubmit }: { onSubmit: (ms: number) => void }) {
         onKeyDown={(e) => {
           if (e.key === "Enter") submit();
         }}
-        placeholder="12.34"
+        placeholder={showMilliseconds ? "12.345" : "12.34"}
         aria-label="Type your time"
         className="w-full max-w-xs bg-transparent text-center font-mono font-bold tabular-nums text-5xl sm:text-7xl outline-none border-b-2 border-border focus:border-accent pb-2"
       />
-      <div className="flex items-center gap-3">
-        <button
-          onClick={submit}
-          className="rounded-full bg-accent text-accent-fg px-5 py-1.5 text-sm font-semibold hover:brightness-110 transition"
-        >
-          Add solve
-        </button>
-      </div>
-      <p className="text-xs text-muted">
-        Time it on your own timer, then type it and press{" "}
-        <kbd className="px-1.5 py-0.5 rounded bg-background border border-border">Enter</kbd> — e.g.{" "}
-        <span className="font-mono">12.34</span> or <span className="font-mono">1:05.23</span>
+      {/* Live preview of the parsed time so digit entry feels predictable */}
+      <p className="h-5 text-sm text-muted tabular-nums">
+        {value && preview !== null ? (
+          <>
+            = <span className="text-accent font-semibold font-mono">{formatMs(preview, decimals)}</span>
+          </>
+        ) : (
+          " "
+        )}
+      </p>
+      <button
+        onClick={submit}
+        className="rounded-full bg-accent text-accent-fg px-5 py-1.5 text-sm font-semibold hover:brightness-110 transition"
+      >
+        {t.timer.addSolve}
+      </button>
+      <p className="text-xs text-muted text-center max-w-xs">
+        {t.timer.typingHintPre} <span className="font-mono">{digitExample}</span>
+        {t.timer.typingHintPost}
       </p>
       {error && (
         <p className="text-xs text-red-400">
-          Enter a valid time like <span className="font-mono">12.34</span> or{" "}
-          <span className="font-mono">1:05.23</span>.
+          {t.timer.errorPre} <span className="font-mono">{digitExample}</span> /{" "}
+          <span className="font-mono">{showMilliseconds ? "12.345" : "12.34"}</span>
         </p>
       )}
     </div>
@@ -208,11 +236,13 @@ function BigDisplay({
   displayMs,
   inspectionRemaining,
   hideWhileSolving,
+  decimals,
 }: {
   phase: TimerPhase;
   displayMs: number;
   inspectionRemaining: number;
   hideWhileSolving: boolean;
+  decimals: number;
 }) {
   let color = "text-foreground";
   let text: string;
@@ -224,12 +254,12 @@ function BigDisplay({
     else color = "text-amber-400";
     text = inspectionText(inspectionRemaining);
     // If inspection isn't active, holding/ready should show 0.00 instead.
-    if (inspectionRemaining >= 15 && phase !== "inspecting") text = "0.00";
+    if (inspectionRemaining >= 15 && phase !== "inspecting") text = formatLive(0, decimals);
   } else if (phase === "running") {
     // Optionally hide the live time to reduce pressure — revealed on stop.
-    text = hideWhileSolving ? "solving…" : formatLive(displayMs);
+    text = hideWhileSolving ? "solving…" : formatLive(displayMs, decimals);
   } else {
-    text = formatLive(displayMs);
+    text = formatLive(displayMs, decimals);
   }
 
   return (
@@ -243,11 +273,11 @@ function inspectionText(remaining: number): string {
   return "DNF";
 }
 
-// Live time while running is shown to 2 decimals; keep it snappy.
-function formatLive(ms: number): string {
+// Live time while running; `decimals` = 2 (centiseconds) or 3 (milliseconds).
+function formatLive(ms: number, decimals: number): string {
   const totalSeconds = ms / 1000;
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds - minutes * 60;
-  if (minutes > 0) return `${minutes}:${seconds.toFixed(2).padStart(5, "0")}`;
-  return seconds.toFixed(2);
+  if (minutes > 0) return `${minutes}:${seconds.toFixed(decimals).padStart(decimals + 3, "0")}`;
+  return seconds.toFixed(decimals);
 }

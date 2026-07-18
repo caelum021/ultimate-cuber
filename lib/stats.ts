@@ -8,25 +8,62 @@ import { effectiveMs, type Solve } from "./solves";
  */
 export function parseTimeInput(raw: string): number | null {
   const s = raw.trim();
-  const m = s.match(/^(?:(\d+):)?(\d{1,2})(?:\.(\d{1,2}))?$/);
+  // Fraction accepts up to 3 digits and is treated as milliseconds
+  // (so "12.34" = 340ms, "12.345" = 345ms).
+  const m = s.match(/^(?:(\d+):)?(\d{1,2})(?:\.(\d{1,3}))?$/);
   if (!m) return null;
   const minutes = m[1] ? parseInt(m[1], 10) : 0;
   const seconds = parseInt(m[2], 10);
-  const centis = m[3] ? parseInt(m[3].padEnd(2, "0"), 10) : 0;
-  const ms = (minutes * 60 + seconds) * 1000 + centis * 10;
+  const millis = m[3] ? parseInt(m[3].padEnd(3, "0"), 10) : 0;
+  const ms = (minutes * 60 + seconds) * 1000 + millis;
   return ms > 0 ? ms : null;
 }
 
-/** Format milliseconds as a cuber-friendly time string, e.g. 12.34 or 1:05.67. */
-export function formatMs(ms: number): string {
+/**
+ * Parse typed input into milliseconds, StackMat-style. If the text contains a
+ * dot or colon it's read literally (via parseTimeInput). Otherwise the digits
+ * are filled from the right based on the precision:
+ *   showMilliseconds → last 3 digits = ms, then 2 = sec, then min
+ *     "12345" → 12.345,  "123456" → 1:23.456
+ *   else → last 2 digits = centiseconds, then 2 = sec, then min
+ *     "1234"  → 12.34,   "12345"  → 1:23.45
+ * The stored value is always exact milliseconds regardless of display precision.
+ */
+export function parseTypedTime(raw: string, showMilliseconds: boolean): number | null {
+  const s = raw.trim();
+  if (!s) return null;
+
+  // Literal form (user typed a dot or colon) — parse as-is.
+  if (s.includes(".") || s.includes(":")) return parseTimeInput(s);
+
+  // Positional digit entry.
+  if (!/^\d+$/.test(s)) return null;
+  const fracLen = showMilliseconds ? 3 : 2;
+  const frac = s.slice(-fracLen).padStart(fracLen, "0");
+  const rest = s.slice(0, Math.max(0, s.length - fracLen));
+  const secStr = rest.slice(-2);
+  const minStr = rest.slice(0, Math.max(0, rest.length - 2));
+
+  const millis = showMilliseconds ? parseInt(frac, 10) : parseInt(frac, 10) * 10;
+  const seconds = secStr ? parseInt(secStr, 10) : 0;
+  const minutes = minStr ? parseInt(minStr, 10) : 0;
+  const total = (minutes * 60 + seconds) * 1000 + millis;
+  return total > 0 ? total : null;
+}
+
+/**
+ * Format milliseconds as a cuber-friendly time string, e.g. 12.34 or 1:05.67.
+ * `decimals` controls precision: 2 = centiseconds (default), 3 = milliseconds.
+ */
+export function formatMs(ms: number, decimals = 2): string {
   if (!isFinite(ms)) return "DNF";
   const totalSeconds = ms / 1000;
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds - minutes * 60;
   if (minutes > 0) {
-    return `${minutes}:${seconds.toFixed(2).padStart(5, "0")}`;
+    return `${minutes}:${seconds.toFixed(decimals).padStart(decimals + 3, "0")}`;
   }
-  return seconds.toFixed(2);
+  return seconds.toFixed(decimals);
 }
 
 /**
