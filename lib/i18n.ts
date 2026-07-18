@@ -10,7 +10,7 @@ export const LANGUAGES: { code: Language; label: string }[] = [
   { code: "zh", label: "中文" },
   { code: "ja", label: "日本語" },
   { code: "es", label: "Español" },
-  { code: "gib", label: "Gibberish 🤪" },
+  { code: "gib", label: "Brainrot 🧠" },
 ];
 
 const en = {

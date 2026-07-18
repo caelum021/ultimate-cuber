@@ -28,8 +28,8 @@ export function GibberishUnlock() {
       update({ gibberishUnlocked: nowUnlocked });
       showToast(
         nowUnlocked
-          ? "🤪 Gibberish unlocked! Check Settings → Language 🗿"
-          : "🙈 Gibberish hidden again.",
+          ? "🧠 Brainrot unlocked! Check Settings → Language 🗿"
+          : "🙈 Brainrot hidden again.",
       );
     }
   };
