@@ -2,13 +2,14 @@
 // reads the matching dictionary. Interface strings only — the Learn hub's
 // detailed algorithm guides stay in English for now.
 
-export type Language = "en" | "ko" | "zh" | "ja";
+export type Language = "en" | "ko" | "zh" | "ja" | "es";
 
 export const LANGUAGES: { code: Language; label: string }[] = [
   { code: "en", label: "English" },
   { code: "ko", label: "한국어" },
   { code: "zh", label: "中文" },
   { code: "ja", label: "日本語" },
+  { code: "es", label: "Español" },
 ];
 
 const en = {
@@ -134,6 +135,128 @@ const en = {
 
 /** All languages share this shape (enforced by the Record type below). */
 export type Dict = typeof en;
+
+const es: Dict = {
+  nav: { timer: "Cronómetro", learn: "Aprender", train: "Entrenar", settings: "Ajustes" },
+  home: {
+    eyebrow: "Tu camino hacia sub-20 y más allá",
+    title: "El compañero definitivo de speedcubing",
+    subtitle:
+      "Un cronómetro rápido estilo WCA que registra cada resolución — ao5, ao12 y tu récord — más un centro de aprendizaje para dominar OLL, PLL y F2L.",
+    ctaTimer: "Empezar a cronometrar →",
+    ctaLearn: "Explorar el centro de aprendizaje",
+    feat1Title: "Mezclas nuevas",
+    feat1Body:
+      "Una mezcla 3×3 aleatoria nueva en cada resolución, generada al instante en tu navegador — sin esperas, funciona sin conexión.",
+    feat2Title: "Estadísticas inteligentes",
+    feat2Body:
+      "ao5 / ao12 / ao100 en vivo, media de sesión y mejor tiempo — con penalizaciones +2 y DNF en cada resolución.",
+    feat3Title: "Aprende y mejora",
+    feat3Body:
+      "Guías y conjuntos de algoritmos para OLL, PLL y F2L para que siempre sepas qué practicar a continuación.",
+    subTitle: "Suscríbete a Ultimate Cuber en YouTube",
+    subBody:
+      "Tutoriales, explicaciones de algoritmos y consejos — desde el método principiante hasta sub-20. Vídeos nuevos para ayudarte a mejorar.",
+    subBtn: "Suscribirse en YouTube",
+    feedbackBtn: "Comentarios",
+    feedbackTitle: "Envíanos tus comentarios",
+    feedbackDesc: "¿Encontraste un error o tienes una idea? Nos encantaría saberlo.",
+    feedbackPlaceholder: "Escribe tus comentarios aquí…",
+    feedbackSend: "Enviar",
+    feedbackCancel: "Cancelar",
+  },
+  timer: {
+    scramble: "Mezcla · 3×3",
+    holdBefore: "Mantén",
+    holdAfter: "(o toca y mantén), suelta para empezar",
+    typingMode: "Modo escritura",
+    inspectionOn: "Inspección de 15s",
+    clearSession: "Borrar sesión",
+    clearConfirm: "¿Borrar todas las resoluciones de esta sesión? No se puede deshacer.",
+    addSolve: "Añadir resolución",
+    typingHintPre: "No necesitas punto — p. ej. escribe",
+    typingHintPost: ". Un punto también funciona.",
+    errorPre: "Introduce un tiempo válido, p. ej.",
+    noSolvesPre: "Aún no hay resoluciones. Mantén",
+    noSolvesPost: "para prepararte, suelta para empezar.",
+  },
+  settings: {
+    title: "Ajustes",
+    subtitle: "Los cambios se guardan automáticamente y se aplican en todo este dispositivo.",
+    timerSection: "Cronómetro",
+    appearanceSection: "Apariencia",
+    timingMethod: "Método de cronometraje",
+    timingMethodDesc:
+      "Cronómetro: mantén espacio / toca para cronometrar en pantalla. Escritura: usa tu propio cronómetro físico y escribe el resultado.",
+    timerLabel: "Cronómetro",
+    typingLabel: "Escritura",
+    inspection: "Inspección de 15 segundos",
+    inspectionDesc:
+      "Cuenta atrás de inspección estilo WCA antes de cada resolución, con penalizaciones +2 / DNF.",
+    scrambleLength: "Longitud de la mezcla",
+    scrambleLengthDesc: "Número de movimientos en cada mezcla 3×3 generada.",
+    hideWhileSolving: "Ocultar el tiempo al resolver",
+    hideWhileSolvingDesc:
+      "Muestra «resolviendo…» en vez del tiempo en curso, y lo revela cuando paras.",
+    showMs: "Mostrar milisegundos",
+    showMsDesc: "Muestra 3 decimales (12.345) en vez de los 2 habituales (12.34).",
+    theme: "Tema",
+    themeDesc: "Cambia entre oscuro y claro en todo el sitio.",
+    dark: "Oscuro",
+    light: "Claro",
+    language: "Idioma",
+    languageDesc: "Elige el idioma del sitio.",
+    reset: "Restablecer todos los ajustes",
+  },
+  learn: {
+    hubTitle: "Centro de aprendizaje",
+    hubIntro:
+      "Todo lo que necesitas para pasar de un método principiante a una resolución CFOP sub-20. Empieza por el resumen, practica F2L y luego aprende OLL y PLL de 2 pasos.",
+    secOLL: "OLL de 2 pasos",
+    secPLL: "PLL de 2 pasos",
+    secLevelUp: "Sube de nivel",
+    secWVLS: "CFOP avanzado: WVLS",
+    secRoux: "Método alternativo: Roux",
+    sec2x2: "Cubo 2×2",
+    sec2x2Intro:
+      "¿Nuevo en el cubo? El 2×2 es el lugar más fácil para empezar. Aprende primero el método principiante y luego acelera con Ortega.",
+    notation:
+      "Notación: R U F = giros de cara en sentido horario, R' = antihorario, R2 = 180°. Minúsculas (r, f) y M son movimientos anchos/de capa media.",
+    learnMore: "Saber más",
+    viewAllOLL: "Ver los 57 algoritmos OLL",
+    viewAllPLL: "Ver los 21 algoritmos PLL",
+    viewAllWVLS: "Ver los 27 algoritmos WV",
+    viewAllCMLL: "Ver los 42 algoritmos CMLL",
+    viewAll2x2: "Ver todos los algoritmos 2×2",
+    openFull2x2: "Abrir la guía completa de 2×2",
+    watchHeading: "Si quieres aprender el método principiante, haz clic en el enlace de abajo.",
+    watchBtn: "Ver en YouTube",
+    backToHub: "← Volver al centro de aprendizaje",
+  },
+  train: {
+    title: "Centro de entrenamiento",
+    subtitle: "Elige un conjunto, mira el caso y nómbralo — luego compruébalo.",
+    choose: "Conjuntos de práctica",
+    selectOne: "Selecciona al menos un conjunto para practicar.",
+    recall: "Intenta recordar el algoritmo…",
+    reveal: "Mostrar respuesta",
+    next: "Siguiente caso →",
+    typePlaceholder: "Escribe el nombre del caso…",
+    check: "Comprobar",
+    correct: "¡Correcto! ✓",
+    wrong: "Casi — inténtalo de nuevo o revela.",
+    practiced: "Practicados",
+    hint: "Consejo: pulsa Espacio o Enter para revelar, y otra vez para el siguiente caso.",
+    setFullOLL: "OLL completo",
+    setFullPLL: "PLL completo",
+    set2LookOLL: "OLL de 2 pasos",
+    set2LookPLL: "PLL de 2 pasos",
+    setWVLS: "WVLS",
+    setCMLL: "CMLL",
+    set2x2OLL: "OLL 2×2",
+    set2x2PBL: "PBL 2×2",
+  },
+};
 
 const ko: Dict = {
   nav: { timer: "타이머", learn: "배우기", train: "연습", settings: "설정" },
@@ -489,4 +612,4 @@ const ja: Dict = {
   },
 };
 
-export const translations: Record<Language, Dict> = { en, ko, zh, ja };
+export const translations: Record<Language, Dict> = { en, ko, zh, ja, es };
