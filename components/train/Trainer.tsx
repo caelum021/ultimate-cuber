@@ -15,18 +15,15 @@ import {
   type Algorithm,
 } from "@/lib/learn";
 
-type TrainSet = {
-  id: string;
-  label: string;
-  algs: Algorithm[];
-  pzl: number;
-  bothFaces?: boolean;
-};
-
+type TrainSet = { id: string; label: string; algs: Algorithm[]; pzl: number; bothFaces?: boolean };
 type Item = { alg: Algorithm; setLabel: string; pzl: number; bothFaces?: boolean };
 
-// Only cases that can be diagrammed (single algorithm, no "then" combos).
 const diagrammable = (a: Algorithm) => !/\bthen\b/i.test(a.moves);
+
+/** Normalize a case name for lenient matching: lowercase, drop "perm", punctuation and spaces. */
+function normalizeName(s: string): string {
+  return s.toLowerCase().replace(/perm/g, "").replace(/[^a-z0-9]/g, "");
+}
 
 export function Trainer() {
   const t = useT();
@@ -47,6 +44,8 @@ export function Trainer() {
 
   const [selected, setSelected] = useState<string[]>(["pll"]);
   const [current, setCurrent] = useState<Item | null>(null);
+  const [typed, setTyped] = useState("");
+  const [status, setStatus] = useState<"idle" | "correct" | "wrong">("idle");
   const [revealed, setRevealed] = useState(false);
   const [count, setCount] = useState(0);
 
@@ -62,7 +61,6 @@ export function Trainer() {
       if (pool.length === 0) return null;
       if (pool.length === 1) return pool[0];
       let next = pool[Math.floor(Math.random() * pool.length)];
-      // avoid repeating the same case twice in a row
       let guard = 0;
       while (exclude && next.alg.name === exclude.alg.name && next.setLabel === exclude.setLabel && guard++ < 20) {
         next = pool[Math.floor(Math.random() * pool.length)];
@@ -72,38 +70,39 @@ export function Trainer() {
     [pool],
   );
 
+  const resetInput = () => {
+    setTyped("");
+    setStatus("idle");
+    setRevealed(false);
+  };
+
   // First case (client only) and whenever the pool changes.
   useEffect(() => {
     setCurrent((c) => (c && pool.some((i) => i.alg.name === c.alg.name && i.setLabel === c.setLabel) ? c : pickRandom()));
-    setRevealed(false);
+    resetInput();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pool]);
 
   const nextCase = useCallback(() => {
     setCurrent((c) => pickRandom(c));
-    setRevealed(false);
+    resetInput();
     setCount((n) => n + 1);
   }, [pickRandom]);
 
-  const reveal = useCallback(() => setRevealed(true), []);
+  const check = useCallback(() => {
+    if (!current) return;
+    if (normalizeName(typed) === normalizeName(current.alg.name)) {
+      setStatus("correct");
+      setRevealed(true);
+    } else {
+      setStatus("wrong");
+    }
+  }, [current, typed]);
 
-  const advance = useCallback(() => {
-    if (!revealed) reveal();
-    else nextCase();
-  }, [revealed, reveal, nextCase]);
-
-  // Space / Enter to reveal then advance.
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.code !== "Space" && e.code !== "Enter") return;
-      const el = e.target as HTMLElement | null;
-      if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA")) return;
-      e.preventDefault();
-      advance();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [advance]);
+  const reveal = useCallback(() => {
+    setRevealed(true);
+    setStatus("idle");
+  }, []);
 
   const toggle = (id: string) =>
     setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
@@ -126,9 +125,7 @@ export function Trainer() {
                 key={s.id}
                 onClick={() => toggle(s.id)}
                 className={`px-3 py-1.5 rounded-full text-sm border transition ${
-                  on
-                    ? "bg-accent text-accent-fg border-accent font-medium"
-                    : "border-border text-muted hover:text-foreground"
+                  on ? "bg-accent text-accent-fg border-accent font-medium" : "border-border text-muted hover:text-foreground"
                 }`}
               >
                 {s.label}
@@ -144,33 +141,79 @@ export function Trainer() {
           {t.train.selectOne}
         </div>
       ) : current ? (
-        <button
-          type="button"
-          onClick={advance}
-          className="rounded-2xl border border-border bg-card/40 p-8 flex flex-col items-center gap-5 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        >
+        <div className="rounded-2xl border border-border bg-card/40 p-6 sm:p-8 flex flex-col items-center gap-5 text-center">
           <CaseDiagram moves={current.alg.moves} pzl={current.pzl} bothFaces={current.bothFaces} size={140} />
 
-          {revealed ? (
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-lg font-semibold">{current.alg.name}</span>
-              <code className="font-mono text-base sm:text-lg text-foreground break-words">
-                {current.alg.moves}
-              </code>
-              {current.alg.note && <p className="text-xs text-muted mt-0.5">{current.alg.note}</p>}
-              <span className="mt-3 inline-flex rounded-full bg-accent text-accent-fg px-5 py-1.5 text-sm font-semibold">
-                {t.train.next}
-              </span>
+          {/* Type-the-alg input */}
+          <div className="w-full max-w-sm flex flex-col gap-2">
+            <input
+              autoFocus
+              value={typed}
+              onChange={(e) => {
+                setTyped(e.target.value);
+                if (status === "wrong") setStatus("idle");
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  if (revealed) nextCase();
+                  else check();
+                }
+              }}
+              readOnly={status === "correct"}
+              placeholder={t.train.typePlaceholder}
+              spellCheck={false}
+              autoComplete="off"
+              className={`w-full rounded-lg border bg-background px-3 py-2.5 text-center font-mono outline-none transition ${
+                status === "correct"
+                  ? "border-accent text-accent"
+                  : status === "wrong"
+                    ? "border-red-500"
+                    : "border-border focus:border-accent"
+              }`}
+            />
+
+            {status === "correct" && <p className="text-sm font-medium text-accent">{t.train.correct}</p>}
+            {status === "wrong" && <p className="text-sm text-red-400">{t.train.wrong}</p>}
+
+            {/* Reveal the answer once checked/revealed */}
+            {revealed && (
+              <div className="mt-1 flex flex-col items-center gap-0.5">
+                <span className="text-sm font-semibold">{current.alg.name}</span>
+                <code className="font-mono text-base text-foreground break-words">{current.alg.moves}</code>
+                {current.alg.note && <p className="text-xs text-muted">{current.alg.note}</p>}
+              </div>
+            )}
+
+            <div className="mt-2 flex justify-center gap-2">
+              {!revealed && (
+                <>
+                  <button
+                    onClick={check}
+                    disabled={!typed.trim()}
+                    className="rounded-full bg-accent text-accent-fg px-5 py-1.5 text-sm font-semibold hover:brightness-110 transition disabled:opacity-40"
+                  >
+                    {t.train.check}
+                  </button>
+                  <button
+                    onClick={reveal}
+                    className="rounded-full border border-border px-5 py-1.5 text-sm text-muted hover:text-foreground transition"
+                  >
+                    {t.train.reveal}
+                  </button>
+                </>
+              )}
+              {revealed && (
+                <button
+                  onClick={nextCase}
+                  className="rounded-full bg-accent text-accent-fg px-5 py-1.5 text-sm font-semibold hover:brightness-110 transition"
+                >
+                  {t.train.next}
+                </button>
+              )}
             </div>
-          ) : (
-            <div className="flex flex-col items-center gap-3">
-              <p className="text-sm text-muted">{t.train.recall}</p>
-              <span className="inline-flex rounded-full border border-border px-5 py-1.5 text-sm font-medium">
-                {t.train.reveal}
-              </span>
-            </div>
-          )}
-        </button>
+          </div>
+        </div>
       ) : (
         <div className="rounded-2xl border border-border bg-card/40 p-10" aria-hidden />
       )}
@@ -179,7 +222,6 @@ export function Trainer() {
         <span>
           {t.train.practiced}: <span className="font-mono text-foreground">{count}</span>
         </span>
-        <span className="hidden sm:block text-xs">{t.train.hint}</span>
       </div>
     </div>
   );
