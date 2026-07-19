@@ -884,9 +884,9 @@ const ja: Dict = {
 // like a real interface. The actual algorithm names + moves live in lib/learn.ts
 // (not here), so the Learn hub still shows real notation like "R U R'".
 const ALIEN_MAP: Record<string, string> = {
-  a: "ᚨ", b: "ᛒ", c: "ᚲ", d: "ᛞ", e: "ᛖ", f: "ᚠ", g: "ᚷ", h: "ᚺ", i: "ᛁ",
-  j: "ᛃ", k: "ᚴ", l: "ᛚ", m: "ᛗ", n: "ᚾ", o: "ᛟ", p: "ᛈ", q: "ᛩ", r: "ᚱ",
-  s: "ᛊ", t: "ᛏ", u: "ᚢ", v: "ᚡ", w: "ᚹ", x: "ᛪ", y: "ᛦ", z: "ᛉ",
+  a: "⏃", b: "⏚", c: "☊", d: "⎅", e: "⟒", f: "⎎", g: "☌", h: "⊑", i: "⟟",
+  j: "⟊", k: "☍", l: "⌰", m: "⋔", n: "⋏", o: "⍜", p: "⌿", q: "⍾", r: "⍀",
+  s: "⌇", t: "⏁", u: "⎍", v: "⎐", w: "⍙", x: "⌖", y: "⊬", z: "⋉",
 };
 
 function toAlien(s: string): string {
