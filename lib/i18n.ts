@@ -2,7 +2,7 @@
 // reads the matching dictionary. Interface strings only — the Learn hub's
 // detailed algorithm guides stay in English for now.
 
-export type Language = "en" | "ko" | "zh" | "ja" | "es" | "gib";
+export type Language = "en" | "ko" | "zh" | "ja" | "es" | "fr" | "gib";
 
 export const LANGUAGES: { code: Language; label: string }[] = [
   { code: "en", label: "English" },
@@ -10,6 +10,7 @@ export const LANGUAGES: { code: Language; label: string }[] = [
   { code: "zh", label: "中文" },
   { code: "ja", label: "日本語" },
   { code: "es", label: "Español" },
+  { code: "fr", label: "Français" },
   { code: "gib", label: "Brainrot 🧠" },
 ];
 
@@ -260,6 +261,130 @@ const es: Dict = {
     set2x2PBL: "PBL 2×2",
     setupScramble: "Scramble de preparación",
     setupHint: "Aplícalo en un cubo resuelto para crear el caso, luego resuélvelo con el algoritmo.",
+  },
+};
+
+const fr: Dict = {
+  nav: { timer: "Chrono", learn: "Apprendre", train: "S'entraîner", settings: "Réglages" },
+  home: {
+    eyebrow: "Ta route vers le sub-20 et au-delà",
+    title: "Le compagnon ultime du speedcubing",
+    subtitle:
+      "Un chrono rapide façon WCA qui enregistre chaque résolution — ao5, ao12 et ton record — plus un centre d'apprentissage pour maîtriser OLL, PLL et F2L.",
+    ctaTimer: "Commencer à chronométrer →",
+    ctaLearn: "Explorer le centre d'apprentissage",
+    feat1Title: "Nouveaux mélanges",
+    feat1Body:
+      "Un mélange 3×3 aléatoire à chaque résolution, généré instantanément dans ton navigateur — sans attente, fonctionne hors ligne.",
+    feat2Title: "Statistiques intelligentes",
+    feat2Body:
+      "ao5 / ao12 / ao100 en direct, moyenne de session et meilleur temps — avec pénalités +2 et DNF à chaque résolution.",
+    feat3Title: "Apprends et progresse",
+    feat3Body:
+      "Des guides et des jeux d'algorithmes pour OLL, PLL et F2L pour toujours savoir quoi travailler ensuite.",
+    subTitle: "Abonne-toi à Ultimate Cuber sur YouTube",
+    subBody:
+      "Tutoriels, explications d'algorithmes et astuces — de la méthode débutant jusqu'au sub-20. De nouvelles vidéos pour t'aider à progresser.",
+    subBtn: "S'abonner sur YouTube",
+    feedbackBtn: "Commentaires",
+    feedbackTitle: "Envoie-nous ton avis",
+    feedbackDesc: "Tu as trouvé un bug ou tu as une idée ? On serait ravis de le savoir.",
+    feedbackPlaceholder: "Écris ton avis ici…",
+    feedbackSend: "Envoyer",
+    feedbackCancel: "Annuler",
+  },
+  timer: {
+    scramble: "Mélange · 3×3",
+    holdBefore: "Maintiens",
+    holdAfter: "(ou touche et maintiens), relâche pour démarrer",
+    typingMode: "Mode saisie",
+    inspectionOn: "Inspection de 15 s",
+    clearSession: "Effacer la session",
+    clearConfirm: "Effacer toutes les résolutions de cette session ? C'est irréversible.",
+    addSolve: "Ajouter une résolution",
+    typingHintPre: "Pas besoin de point — p. ex. tape",
+    typingHintPost: ". Un point fonctionne aussi.",
+    errorPre: "Entre un temps valide, p. ex.",
+    noSolvesPre: "Aucune résolution pour l'instant. Maintiens",
+    noSolvesPost: "pour te préparer, relâche pour démarrer.",
+  },
+  settings: {
+    title: "Réglages",
+    subtitle: "Les changements sont enregistrés automatiquement et s'appliquent sur tout cet appareil.",
+    timerSection: "Chrono",
+    appearanceSection: "Apparence",
+    timingMethod: "Méthode de chronométrage",
+    timingMethodDesc:
+      "Chrono : maintiens espace / touche pour chronométrer à l'écran. Saisie : utilise ton propre chrono physique et tape le résultat.",
+    timerLabel: "Chrono",
+    typingLabel: "Saisie",
+    inspection: "Inspection de 15 secondes",
+    inspectionDesc:
+      "Compte à rebours d'inspection façon WCA avant chaque résolution, avec pénalités +2 / DNF.",
+    scrambleLength: "Longueur du mélange",
+    scrambleLengthDesc: "Nombre de mouvements dans chaque mélange 3×3 généré.",
+    hideWhileSolving: "Masquer le temps pendant la résolution",
+    hideWhileSolvingDesc:
+      "Affiche « résolution… » au lieu du temps en cours, puis le révèle quand tu t'arrêtes.",
+    showMs: "Afficher les millisecondes",
+    showMsDesc: "Affiche 3 décimales (12.345) au lieu des 2 habituelles (12.34).",
+    theme: "Thème",
+    themeDesc: "Bascule entre sombre et clair sur tout le site.",
+    dark: "Sombre",
+    light: "Clair",
+    language: "Langue",
+    languageDesc: "Choisis la langue du site.",
+    reset: "Réinitialiser tous les réglages",
+  },
+  learn: {
+    hubTitle: "Centre d'apprentissage",
+    hubIntro:
+      "Tout ce qu'il te faut pour passer d'une méthode débutant à une résolution CFOP sub-20. Commence par l'aperçu, travaille le F2L, puis apprends OLL et PLL en 2 étapes.",
+    secOLL: "OLL en 2 étapes",
+    secPLL: "PLL en 2 étapes",
+    secLevelUp: "Monte en niveau",
+    secWVLS: "CFOP avancé : WVLS",
+    secRoux: "Méthode alternative : Roux",
+    sec2x2: "Cube 2×2",
+    sec2x2Intro:
+      "Débutant au cube ? Le 2×2 est le point de départ le plus simple. Apprends d'abord la méthode débutant, puis accélère avec Ortega.",
+    notation:
+      "Notation : R U F = tours de face dans le sens horaire, R' = antihoraire, R2 = 180°. Les minuscules (r, f) et M sont des mouvements larges/de tranche.",
+    learnMore: "En savoir plus",
+    viewAllOLL: "Voir les 57 algorithmes OLL",
+    viewAllPLL: "Voir les 21 algorithmes PLL",
+    viewAllWVLS: "Voir les 27 algorithmes WV",
+    viewAllCMLL: "Voir les 42 algorithmes CMLL",
+    viewAll2x2: "Voir tous les algorithmes 2×2",
+    openFull2x2: "Ouvrir le guide complet 2×2",
+    watchHeading: "Si tu veux apprendre la méthode débutant, clique sur le lien ci-dessous.",
+    watchBtn: "Regarder sur YouTube",
+    backToHub: "← Retour au centre d'apprentissage",
+  },
+  train: {
+    title: "Centre d'entraînement",
+    subtitle: "Choisis un jeu, regarde le cas et nomme-le — puis vérifie.",
+    choose: "Jeux d'entraînement",
+    selectOne: "Sélectionne au moins un jeu pour t'entraîner.",
+    recall: "Essaie de te rappeler l'algorithme…",
+    reveal: "Montrer la réponse",
+    next: "Cas suivant →",
+    typePlaceholder: "Tape le nom du cas…",
+    check: "Vérifier",
+    correct: "Correct ! ✓",
+    wrong: "Presque — réessaie ou révèle.",
+    practiced: "Pratiqués",
+    hint: "Astuce : appuie sur Espace ou Entrée pour révéler, puis à nouveau pour le cas suivant.",
+    setFullOLL: "OLL complet",
+    setFullPLL: "PLL complet",
+    set2LookOLL: "OLL en 2 étapes",
+    set2LookPLL: "PLL en 2 étapes",
+    setWVLS: "WVLS",
+    setCMLL: "CMLL",
+    set2x2OLL: "OLL 2×2",
+    set2x2PBL: "PBL 2×2",
+    setupScramble: "Mélange de préparation",
+    setupHint: "Fais-le sur un cube résolu pour créer le cas, puis résous-le avec l'algorithme.",
   },
 };
 
@@ -746,4 +871,4 @@ const ja: Dict = {
   },
 };
 
-export const translations: Record<Language, Dict> = { en, ko, zh, ja, es, gib };
+export const translations: Record<Language, Dict> = { en, ko, zh, ja, es, fr, gib };
