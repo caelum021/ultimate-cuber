@@ -2,7 +2,7 @@
 // reads the matching dictionary. Interface strings only — the Learn hub's
 // detailed algorithm guides stay in English for now.
 
-export type Language = "en" | "ko" | "zh" | "ja" | "es" | "fr" | "gib";
+export type Language = "en" | "ko" | "zh" | "ja" | "es" | "fr" | "gib" | "alien";
 
 export const LANGUAGES: { code: Language; label: string }[] = [
   { code: "en", label: "English" },
@@ -12,6 +12,7 @@ export const LANGUAGES: { code: Language; label: string }[] = [
   { code: "es", label: "Español" },
   { code: "fr", label: "Français" },
   { code: "gib", label: "Brainrot 🧠" },
+  { code: "alien", label: "Alienese 👽" },
 ];
 
 const en = {
@@ -878,4 +879,32 @@ const ja: Dict = {
   },
 };
 
-export const translations: Record<Language, Dict> = { en, ko, zh, ja, es, fr, gib };
+// "Alienese" — every UI string is ciphered into non-Latin runes. Letters map to
+// runes; numbers, arrows, punctuation and emoji pass through so it still reads
+// like a real interface. The actual algorithm names + moves live in lib/learn.ts
+// (not here), so the Learn hub still shows real notation like "R U R'".
+const ALIEN_MAP: Record<string, string> = {
+  a: "ᚨ", b: "ᛒ", c: "ᚲ", d: "ᛞ", e: "ᛖ", f: "ᚠ", g: "ᚷ", h: "ᚺ", i: "ᛁ",
+  j: "ᛃ", k: "ᚴ", l: "ᛚ", m: "ᛗ", n: "ᚾ", o: "ᛟ", p: "ᛈ", q: "ᛩ", r: "ᚱ",
+  s: "ᛊ", t: "ᛏ", u: "ᚢ", v: "ᚡ", w: "ᚹ", x: "ᛪ", y: "ᛦ", z: "ᛉ",
+};
+
+function toAlien(s: string): string {
+  return s.replace(/[a-z]/gi, (ch) => ALIEN_MAP[ch.toLowerCase()] ?? ch);
+}
+
+function alienize<T>(value: T): T {
+  if (typeof value === "string") return toAlien(value) as unknown as T;
+  if (value && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const key in value as Record<string, unknown>) {
+      out[key] = alienize((value as Record<string, unknown>)[key]);
+    }
+    return out as T;
+  }
+  return value;
+}
+
+const alien: Dict = alienize(en);
+
+export const translations: Record<Language, Dict> = { en, ko, zh, ja, es, fr, gib, alien };
