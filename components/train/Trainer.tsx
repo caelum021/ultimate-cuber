@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useT } from "@/components/SettingsProvider";
 import { useBrainrotUnlock } from "@/components/BrainrotUnlock";
 import { CaseDiagram } from "@/components/learn/CaseDiagram";
+import { invertAlg } from "@/lib/caseImage";
 import {
   cmllGroups,
   ollAllAlgs,
@@ -146,6 +147,14 @@ export function Trainer() {
         <div className="rounded-2xl border border-border bg-card/40 p-6 sm:p-8 flex flex-col items-center gap-5 text-center">
           <CaseDiagram moves={current.alg.moves} pzl={current.pzl} bothFaces={current.bothFaces} size={140} />
 
+          {/* Optional setup scramble to physically make the case on your cube */}
+          <SetupScramble
+            key={`${current.setLabel}-${current.alg.name}`}
+            moves={current.alg.moves}
+            label={t.train.setupScramble}
+            hint={t.train.setupHint}
+          />
+
           {/* Type-the-alg input */}
           <div className="w-full max-w-sm flex flex-col gap-2">
             <input
@@ -228,6 +237,32 @@ export function Trainer() {
           </span>
         </span>
       </div>
+    </div>
+  );
+}
+
+/**
+ * A collapsible "setup scramble" — the inverse of the algorithm. Do it on a
+ * solved cube to create the case, then practice solving it with the alg.
+ */
+function SetupScramble({ moves, label, hint }: { moves: string; label: string; hint: string }) {
+  const [open, setOpen] = useState(false);
+  const scramble = invertAlg(moves);
+  if (!scramble) return null;
+  return (
+    <div className="w-full max-w-sm">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="text-xs text-muted hover:text-foreground transition inline-flex items-center gap-1"
+      >
+        🧩 {label} {open ? "▲" : "▼"}
+      </button>
+      {open && (
+        <div className="mt-2 rounded-lg border border-border bg-background px-3 py-2 text-left">
+          <code className="font-mono text-sm break-words">{scramble}</code>
+          <p className="mt-1 text-xs text-muted">{hint}</p>
+        </div>
+      )}
     </div>
   );
 }

@@ -39,6 +39,41 @@ function keepYellowUp(alg: string): string {
  * `bottom` flips the cube (x2) so the white/bottom face is shown instead of the
  * yellow top — used for cases that affect both layers (e.g. Ortega PBL).
  */
+/**
+ * A 3D preview of the cube after applying a scramble to a solved cube — the
+ * `alg` param applies the moves forward, so this shows what your cube looks like
+ * once scrambled. Returns "" for an empty scramble.
+ */
+export function scrambleImageUrl(scramble: string, size = 150): string {
+  const cleaned = scramble.trim();
+  if (!cleaned) return "";
+  const params = new URLSearchParams({
+    fmt: "svg",
+    size: String(size),
+    bg: "t",
+    alg: cleaned,
+  });
+  return `${VISUALCUBE}?${params.toString()}`;
+}
+
+/** Invert one move token: R→R', R'→R, R2→R2 (also handles wide/slice/rotations). */
+function invertToken(tok: string): string {
+  if (tok.endsWith("2")) return tok; // self-inverse
+  if (tok.endsWith("'")) return tok.slice(0, -1); // R' → R
+  return tok + "'"; // R → R'
+}
+
+/**
+ * Invert an algorithm to get a "setup" that leads INTO the case: reverse the
+ * move order and invert each move. Applying this to a solved cube produces the
+ * case, which the alg then solves. Returns "" if it can't be diagrammed/inverted.
+ */
+export function invertAlg(moves: string): string {
+  const cleaned = cleanAlg(moves);
+  if (!cleaned) return "";
+  return cleaned.split(" ").reverse().map(invertToken).join(" ");
+}
+
 export function caseImageUrl(moves: string, pzl = 3, bottom = false): string | null {
   const cleaned = cleanAlg(moves);
   if (!cleaned) return null;

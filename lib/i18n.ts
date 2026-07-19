@@ -131,6 +131,8 @@ const en = {
     setCMLL: "CMLL",
     set2x2OLL: "2×2 OLL",
     set2x2PBL: "2×2 PBL",
+    setupScramble: "Setup scramble",
+    setupHint: "Do this on a solved cube to make the case, then solve it with the algorithm.",
   },
 };
 
@@ -256,6 +258,8 @@ const es: Dict = {
     setCMLL: "CMLL",
     set2x2OLL: "OLL 2×2",
     set2x2PBL: "PBL 2×2",
+    setupScramble: "Scramble de preparación",
+    setupHint: "Aplícalo en un cubo resuelto para crear el caso, luego resuélvelo con el algoritmo.",
   },
 };
 
@@ -377,6 +381,8 @@ const gib: Dict = {
     setCMLL: "CMLL",
     set2x2OLL: "2×2 OLL",
     set2x2PBL: "2×2 PBL",
+    setupScramble: "Setupz scramblz 🧩",
+    setupHint: "Do dis on a solvd cübz 2 makez da casez, den solvz it wit da algoz. ez pz 🗿",
   },
 };
 
@@ -497,6 +503,8 @@ const ko: Dict = {
     setCMLL: "CMLL",
     set2x2OLL: "2×2 OLL",
     set2x2PBL: "2×2 PBL",
+    setupScramble: "셋업 스크램블",
+    setupHint: "맞춰진 큐브에 이걸 적용해 케이스를 만든 뒤, 알고리즘으로 풀어보세요.",
   },
 };
 
@@ -611,6 +619,8 @@ const zh: Dict = {
     setCMLL: "CMLL",
     set2x2OLL: "2×2 OLL",
     set2x2PBL: "2×2 PBL",
+    setupScramble: "设置打乱",
+    setupHint: "在还原好的魔方上做这个打乱来摆出该情形，然后用公式解出。",
   },
 };
 
@@ -731,6 +741,8 @@ const ja: Dict = {
     setCMLL: "CMLL",
     set2x2OLL: "2×2 OLL",
     set2x2PBL: "2×2 PBL",
+    setupScramble: "セットアップスクランブル",
+    setupHint: "そろったキューブでこれを回すとケースが作れます。そのあとアルゴリズムで解きましょう。",
   },
 };
 

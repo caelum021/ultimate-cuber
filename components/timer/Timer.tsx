@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import {
+  effectiveMs,
   loadSolves,
   newId,
   saveSolves,
@@ -10,8 +11,10 @@ import {
   type Solve,
 } from "@/lib/solves";
 import { generateScramble as makeScramble } from "@/lib/scramble";
-import { formatMs, parseTypedTime } from "@/lib/stats";
+import { bestMs, formatMs, parseTypedTime } from "@/lib/stats";
+import { scrambleImageUrl } from "@/lib/caseImage";
 import { useSettings, useT } from "@/components/SettingsProvider";
+import { Confetti } from "@/components/Confetti";
 import type { Dict } from "@/lib/i18n";
 import { useSpeedTimer, type TimerPhase } from "./useSpeedTimer";
 import { StatsBar } from "./StatsBar";
@@ -23,6 +26,10 @@ export function Timer() {
   const [solves, setSolves] = useState<Solve[]>([]);
   const [scramble, setScramble] = useState<string>("");
   const [hydrated, setHydrated] = useState(false);
+  // Personal-best celebration: pbFire is a nonce that re-triggers confetti,
+  // pbTime drives the "New PB!" banner.
+  const [pbFire, setPbFire] = useState(0);
+  const [pbTime, setPbTime] = useState<number | null>(null);
 
   // Load persisted solves on mount (client only, avoids hydration mismatch).
   useEffect(() => {
@@ -53,11 +60,25 @@ export function Timer() {
         penalty: inspectionPenalty,
         createdAt: Date.now(),
       };
+      // Celebrate a new personal best — only if there's an earlier time to beat.
+      const prevBest = bestMs(solves);
+      const newEff = effectiveMs(solve);
+      if (prevBest !== null && isFinite(newEff) && newEff < prevBest) {
+        setPbFire((n) => n + 1);
+        setPbTime(newEff);
+      }
       setSolves((prev) => [solve, ...prev]);
       generateScramble();
     },
-    [scramble, generateScramble]
+    [scramble, solves, generateScramble]
   );
+
+  // Auto-dismiss the PB banner shortly after it appears.
+  useEffect(() => {
+    if (pbTime === null) return;
+    const timeout = window.setTimeout(() => setPbTime(null), 3200);
+    return () => window.clearTimeout(timeout);
+  }, [pbTime, pbFire]);
 
   const typingMode = settings.timingMethod === "typing";
 
@@ -84,12 +105,34 @@ export function Timer() {
 
   return (
     <div className="mx-auto max-w-3xl w-full px-4 py-6 flex flex-col gap-6">
+      <Confetti fire={pbFire} />
+
+      {/* PB banner */}
+      {pbTime !== null && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[85] rounded-full bg-accent text-accent-fg px-5 py-2 text-sm font-bold shadow-lg pointer-events-none">
+          🎉 New PB! {formatMs(pbTime, settings.showMilliseconds ? 3 : 2)} 🎉
+        </div>
+      )}
+
       {/* Scramble */}
       <div className="text-center">
         <p className="text-xs uppercase tracking-wide text-muted mb-1">{t.timer.scramble}</p>
         <p className="font-mono text-lg sm:text-xl leading-relaxed break-words min-h-7">
           {scramble || "…"}
         </p>
+        {scramble && (
+          <div className="mt-3 flex justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={scrambleImageUrl(scramble)}
+              alt="Scramble preview"
+              width={150}
+              height={150}
+              style={{ width: 150, height: 150 }}
+              className="select-none"
+            />
+          </div>
+        )}
       </div>
 
       {/* Timing area: spacebar/tap pad or manual typing */}
