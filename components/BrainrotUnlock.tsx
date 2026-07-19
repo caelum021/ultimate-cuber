@@ -46,7 +46,11 @@ export function BrainrotUnlockProvider({ children }: { children: React.ReactNode
 
   const advance = useCallback(
     (from: Step, needed: number, next: Step, doneMsg: string) => {
-      if (settings.gibberishUnlocked) return; // already unlocked — quest is over
+      if (settings.gibberishUnlocked) {
+        // Already unlocked — tell the user instead of silently doing nothing.
+        showToast("🧠 Brainrot's already unlocked! Reset settings to re-lock it.");
+        return;
+      }
       if (step !== from) return; // not this step's turn — ignore
       count.current += 1;
       if (count.current >= needed) {
