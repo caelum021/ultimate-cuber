@@ -19,6 +19,7 @@ import type { Dict } from "@/lib/i18n";
 import { useSpeedTimer, type TimerPhase } from "./useSpeedTimer";
 import { StatsBar } from "./StatsBar";
 import { SolveList } from "./SolveList";
+import { ProgressGraph } from "./ProgressGraph";
 
 export function Timer() {
   const { settings } = useSettings();
@@ -188,6 +189,12 @@ export function Timer() {
       </div>
 
       <StatsBar solves={solves} />
+
+      <ProgressGraph
+        solves={solves}
+        decimals={settings.showMilliseconds ? 3 : 2}
+        title={t.timer.progressTitle}
+      />
 
       <div className="rounded-xl border border-border bg-card p-4">
         <SolveList solves={solves} onSetPenalty={setPenalty} onDelete={deleteSolve} />

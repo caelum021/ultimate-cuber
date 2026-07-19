@@ -57,6 +57,7 @@ const en = {
     errorPre: "Enter a valid time, e.g.",
     noSolvesPre: "No solves yet. Hold",
     noSolvesPost: "to get ready, release to start.",
+    progressTitle: "Progress",
   },
   settings: {
     title: "Settings",
@@ -183,6 +184,7 @@ const es: Dict = {
     errorPre: "Introduce un tiempo válido, p. ej.",
     noSolvesPre: "Aún no hay resoluciones. Mantén",
     noSolvesPost: "para prepararte, suelta para empezar.",
+    progressTitle: "Progreso",
   },
   settings: {
     title: "Ajustes",
@@ -307,6 +309,7 @@ const fr: Dict = {
     errorPre: "Entre un temps valide, p. ex.",
     noSolvesPre: "Aucune résolution pour l'instant. Maintiens",
     noSolvesPost: "pour te préparer, relâche pour démarrer.",
+    progressTitle: "Progression",
   },
   settings: {
     title: "Réglages",
@@ -432,6 +435,7 @@ const gib: Dict = {
     errorPre: "Typz a validz timez, e.g.",
     noSolvesPre: "no solvez yetz. Holdz",
     noSolvesPost: "2 getz readyz, releasz 2 startz.",
+    progressTitle: "Da glow-upz 📈",
   },
   settings: {
     title: "Settyngz",
@@ -554,6 +558,7 @@ const ko: Dict = {
     errorPre: "올바른 시간을 입력하세요, 예:",
     noSolvesPre: "아직 풀이가 없어요.",
     noSolvesPost: "를 눌러 준비하고, 떼면 시작돼요.",
+    progressTitle: "기록 그래프",
   },
   settings: {
     title: "설정",
@@ -672,6 +677,7 @@ const zh: Dict = {
     errorPre: "请输入有效时间，例如",
     noSolvesPre: "还没有成绩。按住",
     noSolvesPost: "准备，松开开始。",
+    progressTitle: "进步曲线",
   },
   settings: {
     title: "设置",
@@ -792,6 +798,7 @@ const ja: Dict = {
     errorPre: "有効なタイムを入力してください。例：",
     noSolvesPre: "まだソルブがありません。",
     noSolvesPost: "を長押しして準備し、離すとスタート。",
+    progressTitle: "記録の推移",
   },
   settings: {
     title: "設定",
