@@ -12,11 +12,12 @@ import {
 } from "@/lib/solves";
 import { generateScramble as makeScramble } from "@/lib/scramble";
 import { bestMs, formatMs, parseTypedTime } from "@/lib/stats";
-import { scrambleImageUrl } from "@/lib/caseImage";
 import { useSettings, useT } from "@/components/SettingsProvider";
 import { Confetti } from "@/components/Confetti";
+import { playStart, playStop, playPB } from "@/lib/sounds";
 import type { Dict } from "@/lib/i18n";
 import { useSpeedTimer, type TimerPhase } from "./useSpeedTimer";
+import { ScrambleNet } from "./ScrambleNet";
 import { StatsBar } from "./StatsBar";
 import { SolveList } from "./SolveList";
 import { ProgressGraph } from "./ProgressGraph";
@@ -64,14 +65,20 @@ export function Timer() {
       // Celebrate a new personal best — only if there's an earlier time to beat.
       const prevBest = bestMs(solves);
       const newEff = effectiveMs(solve);
-      if (prevBest !== null && isFinite(newEff) && newEff < prevBest) {
+      const isPB = prevBest !== null && isFinite(newEff) && newEff < prevBest;
+      if (isPB) {
         setPbFire((n) => n + 1);
         setPbTime(newEff);
+      }
+      // A victory jingle for a PB, otherwise a gentle "done" beep.
+      if (settings.sound) {
+        if (isPB) playPB();
+        else playStop();
       }
       setSolves((prev) => [solve, ...prev]);
       generateScramble();
     },
-    [scramble, solves, generateScramble]
+    [scramble, solves, generateScramble, settings.sound]
   );
 
   // Auto-dismiss the PB banner shortly after it appears.
@@ -87,6 +94,7 @@ export function Timer() {
     useSpeedTimer({
       useInspection: settings.inspection,
       enabled: !typingMode,
+      onStart: settings.sound ? playStart : undefined,
       onSolveComplete: handleSolveComplete,
     });
 
@@ -123,15 +131,7 @@ export function Timer() {
         </p>
         {scramble && (
           <div className="mt-3 flex justify-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={scrambleImageUrl(scramble)}
-              alt="Scramble preview"
-              width={150}
-              height={150}
-              style={{ width: 150, height: 150 }}
-              className="select-none"
-            />
+            <ScrambleNet scramble={scramble} />
           </div>
         )}
       </div>
@@ -323,11 +323,8 @@ function inspectionText(remaining: number): string {
   return "DNF";
 }
 
-// Live time while running; `decimals` = 2 (centiseconds) or 3 (milliseconds).
+// Live time while running, shown as HH:MM:SS.xxx (same formatter as recorded
+// times). `decimals` = 2 (centiseconds) or 3 (milliseconds).
 function formatLive(ms: number, decimals: number): string {
-  const totalSeconds = ms / 1000;
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds - minutes * 60;
-  if (minutes > 0) return `${minutes}:${seconds.toFixed(decimals).padStart(decimals + 3, "0")}`;
-  return seconds.toFixed(decimals);
+  return formatMs(ms, decimals);
 }

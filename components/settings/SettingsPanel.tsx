@@ -75,6 +75,14 @@ export function SettingsPanel() {
               label={t.settings.showMs}
             />
           </Row>
+
+          <Row title={t.settings.soundEffects} desc={t.settings.soundEffectsDesc}>
+            <Toggle
+              checked={settings.sound}
+              onChange={(v) => update({ sound: v })}
+              label={t.settings.soundEffects}
+            />
+          </Row>
         </div>
       </section>
 

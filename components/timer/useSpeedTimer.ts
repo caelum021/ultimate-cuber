@@ -19,6 +19,8 @@ type Options = {
   holdThresholdMs?: number;
   /** When false, global spacebar handling is disabled (e.g. typing mode). */
   enabled?: boolean;
+  /** Called the moment a solve begins running (e.g. to play a start sound). */
+  onStart?: () => void;
   onSolveComplete: (ms: number, inspectionPenalty: Penalty) => void;
 };
 
@@ -32,6 +34,7 @@ export function useSpeedTimer({
   useInspection,
   holdThresholdMs = DEFAULT_HOLD_THRESHOLD_MS,
   enabled = true,
+  onStart,
   onSolveComplete,
 }: Options) {
   const [phase, setPhase] = useState<TimerPhase>("idle");
@@ -46,10 +49,15 @@ export function useSpeedTimer({
   const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rafRef = useRef<number | null>(null);
   const onSolveCompleteRef = useRef(onSolveComplete);
+  const onStartRef = useRef(onStart);
 
   useEffect(() => {
     onSolveCompleteRef.current = onSolveComplete;
   }, [onSolveComplete]);
+
+  useEffect(() => {
+    onStartRef.current = onStart;
+  }, [onStart]);
 
   const setPhaseBoth = useCallback((p: TimerPhase) => {
     phaseRef.current = p;
@@ -92,6 +100,7 @@ export function useSpeedTimer({
     stopRaf();
     startTimeRef.current = performance.now();
     setPhaseBoth("running");
+    onStartRef.current?.();
 
     const tick = () => {
       setDisplayMs(performance.now() - startTimeRef.current);

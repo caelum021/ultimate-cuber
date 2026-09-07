@@ -52,17 +52,29 @@ export function parseTypedTime(raw: string, showMilliseconds: boolean): number |
 }
 
 /**
- * Format milliseconds as a cuber-friendly time string, e.g. 12.34 or 1:05.67.
- * `decimals` controls precision: 2 = centiseconds (default), 3 = milliseconds.
+ * Format milliseconds as a clock time string. The minutes and hours digits only
+ * appear once that unit is reached, so short solves stay clean:
+ *   19.944   (under a minute)
+ *   1:23.450 (a minute or more)
+ *   2:05:30.120 (an hour or more)
+ * `decimals` controls the fraction precision: 2 = centiseconds (default),
+ * 3 = milliseconds (driven by the "Show milliseconds" setting).
  */
 export function formatMs(ms: number, decimals = 2): string {
   if (!isFinite(ms)) return "DNF";
-  const totalSeconds = ms / 1000;
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds - minutes * 60;
-  if (minutes > 0) {
-    return `${minutes}:${seconds.toFixed(decimals).padStart(decimals + 3, "0")}`;
+  const totalSeconds = Math.max(0, ms) / 1000;
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds - hours * 3600 - minutes * 60;
+  // padStart(decimals + 3) keeps a leading zero on the seconds (e.g. "05.94").
+  const ss = seconds.toFixed(decimals).padStart(decimals + 3, "0");
+  if (hours > 0) {
+    return `${hours}:${String(minutes).padStart(2, "0")}:${ss}`;
   }
+  if (minutes > 0) {
+    return `${minutes}:${ss}`;
+  }
+  // Under a minute — no leading zero, just seconds (e.g. "19.944").
   return seconds.toFixed(decimals);
 }
 

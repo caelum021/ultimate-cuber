@@ -18,6 +18,8 @@ export type Settings = {
   hideWhileSolving: boolean;
   /** Show 3 decimals (milliseconds, e.g. 12.345) instead of 2 (12.34). */
   showMilliseconds: boolean;
+  /** Play beeps when the timer starts/stops and a jingle for a new PB. */
+  sound: boolean;
   /** Colour theme. */
   theme: Theme;
   /** UI language. */
@@ -32,6 +34,7 @@ export const DEFAULT_SETTINGS: Settings = {
   scrambleLength: 20,
   hideWhileSolving: false,
   showMilliseconds: false,
+  sound: true,
   theme: "dark",
   language: "en",
   gibberishUnlocked: false,
