@@ -40,7 +40,7 @@ export default function WvlsPage() {
 function SourceNote() {
   return (
     <p className="text-xs text-muted border-t border-border pt-6">
-      Notation: <span className="font-mono">R U F</span> = clockwise, <span className="font-mono">R&apos;</span>{" "}
+      <Link href="/learn/notation" className="underline hover:text-foreground">Notation</Link>: <span className="font-mono">R U F</span> = clockwise, <span className="font-mono">R&apos;</span>{" "}
       = counter-clockwise, <span className="font-mono">R2</span> = 180°; lowercase (
       <span className="font-mono">r, Lw</span>) are wide moves. Algorithms sourced from{" "}
       <a

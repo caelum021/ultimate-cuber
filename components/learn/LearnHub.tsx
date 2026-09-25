@@ -48,6 +48,7 @@ export function LearnHub() {
       <header>
         <h1 className="text-3xl font-bold tracking-tight">{t.learn.hubTitle}</h1>
         <p className="mt-2 text-muted">{t.learn.hubIntro}</p>
+        <LearnMore url="/learn/notation" label={t.learn.notationGuide} fallback={learnMore} />
       </header>
 
       <GuideBlock guide={guide(cfopOverview)} label={label(cfopOverview.learnMoreLabel)} fallback={learnMore} />

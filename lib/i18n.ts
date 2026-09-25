@@ -104,6 +104,7 @@ const en = {
       "New to cubing? The 2×2 is the friendliest place to start. Learn the beginner method first, then speed up with Ortega.",
     notation:
       "Notation: R U F = clockwise face turns, R' = counter-clockwise, R2 = 180°. Lowercase (r, f) and M are wide/slice moves.",
+    notationGuide: "Read the full notation guide",
     learnMore: "Learn more",
     viewAllOLL: "View all 57 OLL algorithms",
     viewAllPLL: "View all 21 PLL algorithms",
@@ -234,6 +235,7 @@ const es: Dict = {
       "¿Nuevo en el cubo? El 2×2 es el lugar más fácil para empezar. Aprende primero el método principiante y luego acelera con Ortega.",
     notation:
       "Notación: R U F = giros de cara en sentido horario, R' = antihorario, R2 = 180°. Minúsculas (r, f) y M son movimientos anchos/de capa media.",
+    notationGuide: "Lee la guía completa de notación",
     learnMore: "Saber más",
     viewAllOLL: "Ver los 57 algoritmos OLL",
     viewAllPLL: "Ver los 21 algoritmos PLL",
@@ -361,6 +363,7 @@ const fr: Dict = {
       "Débutant au cube ? Le 2×2 est le point de départ le plus simple. Apprends d'abord la méthode débutant, puis accélère avec Ortega.",
     notation:
       "Notation : R U F = tours de face dans le sens horaire, R' = antihoraire, R2 = 180°. Les minuscules (r, f) et M sont des mouvements larges/de tranche.",
+    notationGuide: "Lire le guide complet de notation",
     learnMore: "En savoir plus",
     viewAllOLL: "Voir les 57 algorithmes OLL",
     viewAllPLL: "Voir les 21 algorithmes PLL",
@@ -487,6 +490,7 @@ const gib: Dict = {
       "Nu 2 cübz? Da 2×2 is da friendliestz startz. Lernz da babyz methodz firstz, den speedz upz wit Ortega.",
     notation:
       "Notationz: R U F = clockwisz face turnz, R' = anti-clockwisz, R2 = 180°. lowercasz (r, f) n M are widz/slicz movez. ez pz.",
+    notationGuide: "Readz da full notationz guidz",
     learnMore: "Lernz morez",
     viewAllOLL: "Seez all 57 OLL algoz",
     viewAllPLL: "Seez all 21 PLL algoz",
@@ -612,6 +616,7 @@ const ko: Dict = {
       "큐빙이 처음이신가요? 2×2가 시작하기 가장 좋아요. 먼저 초보 방법을 배우고, Ortega로 속도를 높이세요.",
     notation:
       "표기법: R U F = 시계 방향 면 회전, R' = 반시계 방향, R2 = 180°. 소문자(r, f)와 M은 와이드/슬라이스 무브예요.",
+    notationGuide: "표기법 가이드 전체 보기",
     learnMore: "더 알아보기",
     viewAllOLL: "OLL 알고리즘 57개 모두 보기",
     viewAllPLL: "PLL 알고리즘 21개 모두 보기",
@@ -731,6 +736,7 @@ const zh: Dict = {
     sec2x2Intro: "刚接触魔方？2×2 是最适合入门的。先学新手方法，再用 Ortega 提速。",
     notation:
       "记号：R U F = 顺时针面转，R' = 逆时针，R2 = 180°。小写 (r, f) 和 M 是宽层/中层转动。",
+    notationGuide: "查看完整记号指南",
     learnMore: "了解更多",
     viewAllOLL: "查看全部 57 个 OLL 公式",
     viewAllPLL: "查看全部 21 个 PLL 公式",
@@ -856,6 +862,7 @@ const ja: Dict = {
       "キュービングは初めて？2×2 が一番始めやすいです。まず初心者向け解法を学び、Ortega でスピードアップ。",
     notation:
       "表記：R U F = 時計回りの面回転、R' = 反時計回り、R2 = 180°。小文字 (r, f) と M はワイド／スライス回転です。",
+    notationGuide: "表記ガイドをすべて見る",
     learnMore: "詳しく見る",
     viewAllOLL: "57個のOLL手順をすべて見る",
     viewAllPLL: "21個のPLL手順をすべて見る",
