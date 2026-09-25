@@ -2,7 +2,7 @@
 // reads the matching dictionary. Interface strings only — the Learn hub's
 // detailed algorithm guides stay in English for now.
 
-export type Language = "en" | "ko" | "zh" | "ja" | "es" | "fr" | "pt" | "id" | "gib" | "alien";
+export type Language = "en" | "ko" | "zh" | "ja" | "es" | "fr" | "pt" | "id" | "gib" | "alien" | "dog" | "cat" | "zib";
 
 export const LANGUAGES: { code: Language; label: string }[] = [
   { code: "en", label: "English 🇬🇧" },
@@ -16,6 +16,9 @@ export const LANGUAGES: { code: Language; label: string }[] = [
   { code: "gib", label: "Brainrot 🧠" },
   // "Alienese" written in its own runes (⏃⌰⟟⟒⋏⟒⌇⟒ = A-l-i-e-n-e-s-e).
   { code: "alien", label: "⏃⌰⟟⟒⋏⟒⌇⟒ 👽" },
+  { code: "dog", label: "Woof 🐶" },
+  { code: "cat", label: "Meow 🐱" },
+  { code: "zib", label: "Zibzab 🌀" },
 ];
 
 const en = {
@@ -1257,22 +1260,86 @@ const ALIEN_MAP: Record<string, string> = {
   s: "⌇", t: "⏁", u: "⎍", v: "⎐", w: "⍙", x: "⌖", y: "⊬", z: "⋉",
 };
 
+// Placeholders like {n} are filled in at runtime, so ciphers must leave them alone.
+const PLACEHOLDER = /(\{\w+\})/;
+
 function toAlien(s: string): string {
-  return s.replace(/[a-z]/gi, (ch) => ALIEN_MAP[ch.toLowerCase()] ?? ch);
+  return s
+    .split(PLACEHOLDER)
+    .map((part) =>
+      PLACEHOLDER.test(part) ? part : part.replace(/[a-z]/gi, (ch) => ALIEN_MAP[ch.toLowerCase()] ?? ch),
+    )
+    .join("");
 }
 
-function alienize<T>(value: T): T {
-  if (typeof value === "string") return toAlien(value) as unknown as T;
+/** Apply a string transform to every string in a dictionary. */
+function mapStrings<T>(value: T, fn: (s: string) => string): T {
+  if (typeof value === "string") return fn(value) as unknown as T;
   if (value && typeof value === "object") {
     const out: Record<string, unknown> = {};
     for (const key in value as Record<string, unknown>) {
-      out[key] = alienize((value as Record<string, unknown>)[key]);
+      out[key] = mapStrings((value as Record<string, unknown>)[key], fn);
     }
     return out as T;
   }
   return value;
 }
 
-const alien: Dict = alienize(en);
+const alien: Dict = mapStrings(en, toAlien);
 
-export const translations: Record<Language, Dict> = { en, ko, zh, ja, es, fr, pt, id: idn, gib, alien };
+// Word-swap languages — "Woof" (Lulu's language), "Meow" and "Zibzab". Every
+// English word is replaced by a made-up one, and the same word always gets the
+// same replacement so it reads like a real language. Words with digits and
+// all-caps acronyms (ao5, 3×3, OLL, PLL, DNF) stay readable so the site still
+// works, and placeholders like {n} are left alone.
+function wordSwap(makeWord: (hash: number) => string) {
+  const swap = (word: string): string => {
+    if (/\d/.test(word) || /^[A-Z]{2,}$/.test(word)) return word;
+    let hash = 0;
+    for (const ch of word.toLowerCase()) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
+    const out = makeWord(hash);
+    if (word === word.toUpperCase() && word.length > 1) return out.toUpperCase();
+    return /^\p{Lu}/u.test(word) ? out[0].toUpperCase() + out.slice(1) : out;
+  };
+  return (s: string): string =>
+    s
+      .split(PLACEHOLDER)
+      .map((part) => (PLACEHOLDER.test(part) ? part : part.replace(/[\p{L}\p{N}'’]+/gu, swap)))
+      .join("");
+}
+
+const pick = (sounds: string[]) => (hash: number) => sounds[hash % sounds.length];
+
+const dog: Dict = mapStrings(
+  en,
+  wordSwap(pick(["woof", "ruff", "arf", "bark", "bork", "yip", "awoo", "grr", "wuf", "yap"])),
+);
+
+const cat: Dict = mapStrings(
+  en,
+  wordSwap(pick(["meow", "mew", "purr", "mrrp", "nya", "hiss", "mrow", "prrt", "miau", "mraow"])),
+);
+
+// Zibzab: short, pronounceable nonsense — one or two consonant-vowel syllables,
+// sometimes ending in a consonant ("zo", "kaba", "dup").
+const ZIB_CONSONANTS = "bdfgklmnprstvz";
+const ZIB_VOWELS = "aeiou";
+const zibzab: Dict = mapStrings(
+  en,
+  wordSwap((hash) => {
+    const next = (n: number) => {
+      const r = hash % n;
+      hash = Math.floor(hash / n);
+      return r;
+    };
+    const syllables = 1 + next(2);
+    let out = "";
+    for (let i = 0; i < syllables; i++) {
+      out += ZIB_CONSONANTS[next(ZIB_CONSONANTS.length)] + ZIB_VOWELS[next(ZIB_VOWELS.length)];
+    }
+    if (next(3) === 0) out += ZIB_CONSONANTS[next(ZIB_CONSONANTS.length)];
+    return out;
+  }),
+);
+
+export const translations: Record<Language, Dict> = { en, ko, zh, ja, es, fr, pt, id: idn, gib, alien, dog, cat, zib: zibzab };
