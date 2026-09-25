@@ -763,6 +763,198 @@ const learnProse: Partial<Record<Language, ProseMap>> = {
         "上面の向きを揃えた状態で、両層のコーナーを一度に正しい位置へ入れ、解を仕上げます。ケース名は Speed Cube Database の Ortega PBL 表記に従います。",
     },
   },
+  id: {
+    cfop: {
+      title: "CFOP — metode yang dipakai kebanyakan cuber sub-20",
+      body: [
+        "CFOP adalah singkatan dari Cross, F2L, OLL, PLL — empat tahap yang diselesaikan secara berurutan.",
+        "Cross: selesaikan empat edge di satu sisi (biasanya putih) sesuai center-nya. Rencanakan saat inspeksi dan usahakan selesai dalam ≤8 gerakan.",
+        "F2L (First Two Layers): pasangkan setiap corner dengan edge-nya lalu masukkan bersama, sehingga dua layer pertama selesai sekaligus. Di sinilah sebagian besar penghematan waktu menuju sub-20 berasal.",
+        "OLL (Orient Last Layer): buat seluruh sisi atas menjadi satu warna. '2-look OLL' yang ramah pemula di bawah melakukannya dalam dua langkah dengan hanya ~10 algoritma.",
+        "PLL (Permute Last Layer): pindahkan piece di layer terakhir ke posisi yang benar. '2-look PLL' melakukannya hanya dengan beberapa algoritma.",
+      ],
+    },
+    f2l: {
+      title: "F2L: memasangkan secara intuitif",
+      body: [
+        "Daripada menghafal 41 kasus, pelajari F2L secara intuitif: cari pasangan corner/edge, satukan di layer atas, lalu masukkan ke slot yang benar.",
+        "Aturan emas: jika corner ada di layer atas, posisikan di atas slot tujuannya, atur edge supaya pasangannya tersambung, lalu masukkan dengan gerakan sederhana seperti U R U' R' (atau cerminannya).",
+        "Look ahead — saat menyelesaikan satu pasangan, biarkan matamu mencari pasangan berikutnya. Putar lebih pelan, kenali lebih cepat. Ini perubahan kebiasaan terbesar untuk menembus sub-20.",
+      ],
+    },
+    "oll-edges": {
+      title: "2-Look OLL · Langkah 1: orientasi edge",
+      summary: "Buat silang kuning di sisi atas. Lihat bentuk edge kuning (titik, L, atau garis) lalu pakai algoritma yang sesuai.",
+    },
+    "oll-corners": {
+      title: "2-Look OLL · Langkah 2: orientasi corner (OCLL)",
+      summary: "Setelah silang jadi, orientasikan corner supaya seluruh sisi atas kuning. Tujuh kasus ini sudah cukup.",
+    },
+    "pll-corners": {
+      title: "2-Look PLL · Langkah 1: permutasi corner",
+      summary:
+        "Putar corner layer terakhir ke posisinya. Cari sisi dengan dua corner 'lampu depan' yang sama. Kalau tidak ada, lakukan algoritmanya sekali dari sudut mana saja dulu.",
+    },
+    "pll-edges": {
+      title: "2-Look PLL · Langkah 2: permutasi edge",
+      summary: "Setelah corner benar, putar edge-nya. Ua/Ub memutar 3 edge, H menukar pasangan yang berseberangan, Z menukar pasangan yang bersebelahan.",
+    },
+    "pll-1look-starters": {
+      title: "PLL lengkap yang bagus dipelajari berikutnya",
+      summary: "Setelah 2-look terasa nyaman, tiga ini mencakup kasus one-look PLL yang paling sering muncul dan cepat dikuasai.",
+    },
+    wvls: {
+      title: "WVLS (Winter Variation) — orientasikan corner sambil memasukkan pasangan terakhir",
+      body: [
+        "WVLS adalah teknik CFOP lanjutan yang melewati langkah corner OLL. Alih-alih memasukkan pasangan F2L terakhir lalu mengorientasikan corner secara terpisah, kamu melakukan keduanya sekaligus — gerakan memasukkannya sendiri mengorientasikan keempat corner atas.",
+        "Syarat: hanya berlaku jika pasangan corner-edge terakhir sudah tersambung di layer atas DAN semua edge layer terakhir sudah terorientasi (silang kuning sudah jadi). Setelah WVLS semua piece terorientasi, jadi tinggal selesaikan dengan PLL.",
+        "Ada 27 kasus Winter Variation (WV). Banyak algoritma untuk penghematan waktu yang kecil, jadi kebanyakan cuber mempelajarinya perlahan setelah look-ahead F2L mereka mantap. Mulailah dengan beberapa di bawah.",
+      ],
+    },
+    "wvls-set": {
+      title: "Winter Variation — kasus awal",
+      summary:
+        "Sebagian kasus yang mewakili 27 kasus WV. Pasangannya tersambung di layer U dan semua edge layer terakhir sudah terorientasi; algoritmanya memasukkan pasangan sambil mengorientasikan corner. (Diverifikasi dari Speed Cube Database.)",
+    },
+    roux: {
+      title: "Metode Roux — alternatif CFOP dengan jumlah gerakan sedikit",
+      body: [
+        "Roux adalah alternatif CFOP yang populer, berbasis block-building dan sangat efisien (sering ~45 gerakan dibanding ~55 untuk CFOP), dengan banyak memakai irisan M alih-alih rotasi kubus. Banyak cuber top memakainya — jalur yang sah menuju sub-20 dan lebih.",
+        "Langkah 1 — First Block (FB): bangun blok 1×2×3 di kiri bawah (mencakup sisi kiri). Sepenuhnya intuitif, ~7–8 gerakan. Ini bagian yang paling sulit untuk belajar merencanakannya.",
+        "Langkah 2 — Second Block (SB): bangun blok 1×2×3 yang serupa di kanan bawah tanpa merusak blok pertama. Kini dua blok bawah selesai, dan layer U serta irisan M bebas diputar.",
+        "Langkah 3 — CMLL: orientasikan DAN permutasikan empat corner layer atas dalam satu langkah, tanpa memedulikan edge irisan M. Totalnya 42 algoritma, tapi banyak yang sama dengan kasus corner yang sudah kamu kenal (Sune, Anti-Sune, dll.). Lihat set awal di bawah.",
+        "Langkah 4 — LSE (Last Six Edges): selesaikan enam edge sisanya hanya dengan gerakan M dan U, dalam tiga sub-langkah — (4a) orientasi edge, (4b) tempatkan edge UL/UR, (4c) putar edge irisan M terakhir. Hampir tanpa hafalan; kebanyakan intuisi.",
+      ],
+    },
+    "roux-cmll": {
+      title: "CMLL — algoritma awal",
+      summary:
+        "Kasus CMLL umum untuk memulai (mengorientasikan dan mempermutasikan corner atas dalam satu langkah). Notasinya termasuk gerakan lebar seperti r. (Diverifikasi dari Speed Cube Database.)",
+    },
+    "2x2-beginner": {
+      title: "2×2 — Metode pemula (layer per layer)",
+      body: [
+        "2×2 (Pocket Cube) tidak punya center atau edge — hanya 8 corner. Itu membuatnya kubus pertama yang sempurna: pada dasarnya ini layer terakhir 3×3, jadi semua yang kamu pelajari di sini langsung terbawa.",
+        "Langkah 1 — Layer pertama: pilih satu warna dan selesaikan keempat corner di satu sisi sehingga seluruh layer bawah jadi, dengan stiker samping yang cocok. Ini intuitif — seperti langkah corner di 3×3.",
+        "Langkah 2 — Orientasikan sisi atas: putar kubus supaya layer yang belum jadi ada di atas, lalu ulangi algoritma Sune (R U R' U R U2 R') sampai seluruh sisi atas satu warna.",
+        "Langkah 3 — Permutasikan sisi atas: sisi atas sudah satu warna tapi beberapa corner mungkin salah tempat. Pakai algoritma permutasi (lihat Ortega PBL di bawah) untuk menukarnya ke posisi yang benar. Selesai! 🎉",
+      ],
+    },
+    ortega: {
+      title: "2×2 — Metode Ortega",
+      body: [
+        "Ortega adalah metode speed populer untuk 2×2 — hanya sekitar 12 algoritma, dan sering menghasilkan solve di bawah 5 detik. Langkah berikutnya yang bagus setelah metode pemula terasa nyaman.",
+        "Langkah 1 — Sisi pertama: selesaikan satu sisi penuh (keempat corner berwarna sama) TANPA memedulikan stiker samping. Lebih cepat dan fleksibel daripada satu layer penuh.",
+        "Langkah 2 — OLL: orientasikan layer terakhir supaya sisi seberangnya satu warna. Tujuh kasus di bawah mencakup semuanya — banyak yang sudah kamu kenal dari 3×3 (Sune, Anti-Sune…).",
+        "Langkah 3 — PBL: permutasikan kedua layer sekaligus — corner di atas DAN di bawah masuk ke tempatnya dengan satu algoritma. Enam kasus di bawah menyelesaikan solve-nya.",
+      ],
+    },
+    "ortega-oll": {
+      title: "Ortega OLL — orientasikan sisi atas (7 kasus)",
+      summary: "Buat sisi atas satu warna. Kenali pola corner yang sudah terorientasi/terpelintir lalu pakai algoritma yang sesuai.",
+    },
+    "ortega-pbl": {
+      title: "Ortega PBL — permutasikan kedua layer (6 kasus)",
+      summary:
+        "Dengan sisi atas terorientasi, algoritma ini menukar corner di kedua layer ke tempatnya sekaligus — menyelesaikan solve. Nama kasus mengikuti label Ortega PBL dari Speed Cube Database.",
+    },
+  },
+  pt: {
+    cfop: {
+      title: "CFOP — o método que a maioria dos cubers sub-20 usa",
+      body: [
+        "CFOP significa Cross, F2L, OLL, PLL — as quatro etapas que você resolve em ordem.",
+        "Cruz (Cross): resolva as quatro arestas de uma face (normalmente a branca) em volta dos centros certos. Planeje durante a inspeção e tente fazer em ≤8 movimentos.",
+        "F2L (First Two Layers): junte cada canto com a aresta correspondente e insira os dois juntos, resolvendo as duas primeiras camadas de uma vez. É daqui que vem a maior parte do tempo que você vai ganhar rumo ao sub-20.",
+        "OLL (Orient Last Layer): deixe a face de cima inteira de uma cor. O 'OLL em 2 looks' abaixo, ótimo para iniciantes, faz isso em duas etapas com só ~10 algoritmos.",
+        "PLL (Permute Last Layer): leve as peças da última camada para os lugares certos. O 'PLL em 2 looks' faz isso com poucos algoritmos.",
+      ],
+    },
+    f2l: {
+      title: "F2L: montando pares de forma intuitiva",
+      body: [
+        "Em vez de decorar 41 casos, aprenda o F2L de forma intuitiva: encontre um par canto/aresta, junte os dois na camada de cima e depois insira no slot certo.",
+        "Regra de ouro: se o canto está na camada de cima, posicione-o acima do slot de destino, ajeite a aresta para o par se conectar e insira com um movimento simples tipo U R U' R' (ou espelhado).",
+        "Look ahead — enquanto termina um par, deixe os olhos procurarem o próximo. Gire mais devagar, reconheça mais rápido. É a maior mudança de hábito para quebrar o sub-20.",
+      ],
+    },
+    "oll-edges": {
+      title: "OLL em 2 looks · Etapa 1: orientar as arestas",
+      summary: "Faça a cruz amarela em cima. Veja a forma das arestas amarelas (ponto, L ou linha) e aplique o algoritmo correspondente.",
+    },
+    "oll-corners": {
+      title: "OLL em 2 looks · Etapa 2: orientar os cantos (OCLL)",
+      summary: "Com a cruz feita, oriente os cantos para deixar a face de cima toda amarela. Estes 7 casos bastam.",
+    },
+    "pll-corners": {
+      title: "PLL em 2 looks · Etapa 1: permutar os cantos",
+      summary:
+        "Gire os cantos da última camada para o lugar. Procure uma face com dois cantos iguais formando 'faróis'. Se não houver, faça o algoritmo uma vez de qualquer ângulo primeiro.",
+    },
+    "pll-edges": {
+      title: "PLL em 2 looks · Etapa 2: permutar as arestas",
+      summary: "Com os cantos certos, gire as arestas. Ua/Ub giram 3 arestas, H troca pares opostos e Z troca pares adjacentes.",
+    },
+    "pll-1look-starters": {
+      title: "PLLs completos que valem a pena aprender em seguida",
+      summary: "Quando o 2 looks estiver confortável, estes três cobrem os casos de PLL em 1 look mais comuns e são vitórias rápidas.",
+    },
+    wvls: {
+      title: "WVLS (Winter Variation) — oriente os cantos ao inserir o último par",
+      body: [
+        "WVLS é uma técnica avançada de CFOP que pula a etapa de cantos do OLL. Em vez de inserir o último par do F2L e depois orientar os cantos separadamente, você faz as duas coisas juntas — a própria inserção orienta os quatro cantos de cima.",
+        "Pré-requisitos: só vale quando o último par canto-aresta já está conectado na camada de cima E todas as arestas da última camada já estão orientadas (a cruz amarela já está feita). Depois do WVLS todas as peças estão orientadas, então é só terminar com um PLL.",
+        "São 27 casos de Winter Variation (WV). É muito algoritmo para pouco ganho de tempo, então a maioria aprende aos poucos, depois que o look ahead do F2L estiver firme. Comece pelos poucos abaixo.",
+      ],
+    },
+    "wvls-set": {
+      title: "Winter Variation — casos iniciais",
+      summary:
+        "Uma amostra representativa dos 27 casos de WV. O par está conectado na camada U e todas as arestas da última camada estão orientadas; o algoritmo insere o par e orienta os cantos. (Verificado no Speed Cube Database.)",
+    },
+    roux: {
+      title: "O método Roux — uma alternativa ao CFOP com menos movimentos",
+      body: [
+        "Roux é uma alternativa popular ao CFOP, baseada em montar blocos e muito eficiente (muitas vezes ~45 movimentos contra ~55 do CFOP), usando bastante a camada M em vez de rotações do cubo. Muitos cubers de ponta usam — é um caminho legítimo para o sub-20 e além.",
+        "Etapa 1 — Primeiro bloco (FB): monte um bloco 1×2×3 embaixo à esquerda (ocupando a face esquerda). Totalmente intuitivo, ~7–8 movimentos. É a parte mais difícil de aprender a planejar.",
+        "Etapa 2 — Segundo bloco (SB): monte um bloco 1×2×3 igual embaixo à direita sem desfazer o primeiro. Agora os dois blocos de baixo estão prontos, e a camada U e a camada M ficam livres para girar.",
+        "Etapa 3 — CMLL: oriente E permute os quatro cantos da camada de cima em uma etapa, ignorando as arestas da camada M. São 42 algoritmos no total, mas muitos coincidem com casos de canto que você já conhece (Sune, Anti-Sune etc.). Veja o conjunto inicial abaixo.",
+        "Etapa 4 — LSE (Last Six Edges): resolva as seis arestas restantes só com movimentos M e U, em três subetapas — (4a) orientar as arestas, (4b) posicionar as arestas UL/UR, (4c) ciclar as últimas arestas da camada M. Quase nada para decorar; é principalmente intuição.",
+      ],
+    },
+    "roux-cmll": {
+      title: "CMLL — algoritmos iniciais",
+      summary:
+        "Casos comuns de CMLL para começar (orientam e permutam os cantos de cima em uma etapa). A notação inclui movimentos largos como r. (Verificado no Speed Cube Database.)",
+    },
+    "2x2-beginner": {
+      title: "2×2 — Método para iniciantes (camada por camada)",
+      body: [
+        "O 2×2 (Pocket Cube) não tem centros nem arestas — só 8 cantos. Isso faz dele o primeiro cubo perfeito: é basicamente a última camada de um 3×3, então tudo o que você aprende aqui passa direto para o 3×3.",
+        "Etapa 1 — Primeira camada: escolha uma cor e resolva os quatro cantos de uma face para completar a camada de baixo, com os adesivos laterais batendo. É intuitivo — como a etapa dos cantos no 3×3.",
+        "Etapa 2 — Orientar o topo: vire o cubo para a camada não resolvida ficar em cima e repita o algoritmo Sune (R U R' U R U2 R') até a face de cima ficar toda de uma cor.",
+        "Etapa 3 — Permutar o topo: a face de cima está de uma cor, mas alguns cantos podem estar no lugar errado. Use um algoritmo de permutação (veja o Ortega PBL abaixo) para colocá-los no lugar. Resolvido! 🎉",
+      ],
+    },
+    ortega: {
+      title: "2×2 — Método Ortega",
+      body: [
+        "Ortega é o método de velocidade mais popular no 2×2 — só uns 12 algoritmos, e rende solves abaixo de 5 segundos com frequência. Um ótimo próximo passo quando o método para iniciantes estiver confortável.",
+        "Etapa 1 — Primeira face: resolva uma face inteira (os quatro cantos da mesma cor) SEM se preocupar com os adesivos laterais. Mais rápido e flexível do que uma camada inteira.",
+        "Etapa 2 — OLL: oriente a última camada para a face oposta ficar de uma cor só. Os 7 casos abaixo cobrem tudo — muitos você já conhece do 3×3 (Sune, Anti-Sune…).",
+        "Etapa 3 — PBL: permute as duas camadas de uma vez — os cantos de cima E de baixo vão para o lugar com um único algoritmo. Os 6 casos abaixo terminam o solve.",
+      ],
+    },
+    "ortega-oll": {
+      title: "Ortega OLL — orientar o topo (7 casos)",
+      summary: "Deixe a face de cima de uma cor só. Reconheça o padrão de cantos orientados/torcidos e aplique o algoritmo correspondente.",
+    },
+    "ortega-pbl": {
+      title: "Ortega PBL — permutar as duas camadas (6 casos)",
+      summary:
+        "Com o topo orientado, estes algoritmos colocam os cantos das duas camadas no lugar de uma vez — terminando o solve. Os nomes dos casos seguem as etiquetas de Ortega PBL do Speed Cube Database.",
+    },
+  },
 };
 
 /** Returns a guide with title/body translated for the language (algorithms untouched). */

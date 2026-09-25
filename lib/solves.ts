@@ -45,6 +45,70 @@ export function saveSolves(solves: Solve[]): void {
   }
 }
 
+// ── Backup files ────────────────────────────────────────────────────────────
+// Solves only live in this browser, so export/import is how you keep them safe
+// or move them to another device.
+
+const BACKUP_FORMAT = "ultimatecuber-solves";
+
+function isSolve(v: unknown): v is Solve {
+  if (!v || typeof v !== "object") return false;
+  const s = v as Record<string, unknown>;
+  return (
+    typeof s.id === "string" &&
+    typeof s.ms === "number" &&
+    Number.isFinite(s.ms) &&
+    s.ms >= 0 &&
+    typeof s.scramble === "string" &&
+    (s.penalty === "OK" || s.penalty === "+2" || s.penalty === "DNF") &&
+    typeof s.createdAt === "number"
+  );
+}
+
+/** Serialize solves to a backup file's contents. */
+export function exportSolves(solves: Solve[]): string {
+  return JSON.stringify(
+    { format: BACKUP_FORMAT, version: 1, exportedAt: Date.now(), solves },
+    null,
+    2,
+  );
+}
+
+/**
+ * Parse a backup file. Accepts our own export or a bare array of solves.
+ * Returns null if the file isn't a solves backup at all; individual malformed
+ * entries are dropped.
+ */
+export function parseSolvesBackup(text: string): Solve[] | null {
+  let data: unknown;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    return null;
+  }
+  const list = Array.isArray(data)
+    ? data
+    : data && typeof data === "object" && Array.isArray((data as { solves?: unknown }).solves)
+      ? (data as { solves: unknown[] }).solves
+      : null;
+  if (!list) return null;
+  return list.filter(isSolve).map(({ id, ms, scramble, penalty, createdAt }) => ({
+    id,
+    ms,
+    scramble,
+    penalty,
+    createdAt,
+  }));
+}
+
+/** Merge imported solves into existing ones (skipping duplicate ids), newest first. */
+export function mergeSolves(existing: Solve[], incoming: Solve[]): { merged: Solve[]; added: number } {
+  const ids = new Set(existing.map((s) => s.id));
+  const fresh = incoming.filter((s) => !ids.has(s.id) && ids.add(s.id));
+  const merged = [...existing, ...fresh].sort((a, b) => b.createdAt - a.createdAt);
+  return { merged, added: fresh.length };
+}
+
 export function newId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
     return crypto.randomUUID();

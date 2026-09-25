@@ -1,8 +1,10 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { useSettings, useT } from "@/components/SettingsProvider";
 import { SCRAMBLE_MAX, SCRAMBLE_MIN } from "@/lib/settings";
 import { LANGUAGES } from "@/lib/i18n";
+import { exportSolves, loadSolves, mergeSolves, parseSolvesBackup, saveSolves } from "@/lib/solves";
 
 export function SettingsPanel() {
   const { settings, update, reset } = useSettings();
@@ -126,12 +128,82 @@ export function SettingsPanel() {
         </div>
       </section>
 
+      <DataSection />
+
       <div>
         <button onClick={reset} className="text-sm text-muted hover:text-red-400 transition">
           {t.settings.reset}
         </button>
       </div>
     </div>
+  );
+}
+
+function DataSection() {
+  const t = useT();
+  const fileInput = useRef<HTMLInputElement>(null);
+  const [status, setStatus] = useState<{ ok: boolean; text: string } | null>(null);
+
+  const handleExport = () => {
+    const blob = new Blob([exportSolves(loadSolves())], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `ultimatecuber-solves-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // let the same file be picked again
+    if (!file) return;
+    const incoming = parseSolvesBackup(await file.text());
+    if (!incoming) {
+      setStatus({ ok: false, text: t.settings.importError });
+      return;
+    }
+    const { merged, added } = mergeSolves(loadSolves(), incoming);
+    saveSolves(merged);
+    setStatus({
+      ok: true,
+      text: added > 0 ? t.settings.importDone.replace("{n}", String(added)) : t.settings.importNone,
+    });
+  };
+
+  const buttonClass =
+    "rounded-lg border border-border px-3 py-1 text-sm text-foreground hover:border-accent hover:text-accent transition";
+
+  return (
+    <section className="flex flex-col gap-1">
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-2">
+        {t.settings.dataSection}
+      </h2>
+      <div className="rounded-xl border border-border bg-card divide-y divide-border">
+        <Row title={t.settings.exportSolves} desc={t.settings.exportSolvesDesc}>
+          <button onClick={handleExport} className={buttonClass}>
+            {t.settings.exportBtn}
+          </button>
+        </Row>
+        <Row title={t.settings.importSolves} desc={t.settings.importSolvesDesc}>
+          <button onClick={() => fileInput.current?.click()} className={buttonClass}>
+            {t.settings.importBtn}
+          </button>
+          <input
+            ref={fileInput}
+            type="file"
+            accept="application/json,.json"
+            onChange={handleImport}
+            className="hidden"
+          />
+        </Row>
+      </div>
+      {status && (
+        <p role="status" className={`mt-2 text-sm ${status.ok ? "text-accent" : "text-red-400"}`}>
+          {status.text}
+        </p>
+      )}
+    </section>
   );
 }
 
